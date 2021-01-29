@@ -5,11 +5,13 @@ import { Main } from "./Main";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import "./style.scss";
+import { TypingTrainer } from "./pages/TypingTrainer";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Main />
+      {/*TODO put main here*/}
+      <TypingTrainer />
     </BrowserRouter>
   );
 };
