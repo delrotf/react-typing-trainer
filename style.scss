@@ -1,0 +1,16 @@
+@import "~bootstrap/scss/bootstrap";
+
+//css modules does not work in Stackblitz so applying rules here.
+.login-page {
+  .form-card {
+    width: 500px;
+
+    .header {
+      background-color: grey;
+    }
+
+    .form-text {
+      min-height: 19px;
+    }
+  }
+}
