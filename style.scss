@@ -1,6 +1,10 @@
 @import "~bootstrap/scss/bootstrap";
 
 //css modules does not work in Stackblitz so applying rules here.
+body {
+  background-color: #323437;
+}
+
 .login-page {
   .form-card {
     width: 500px;
@@ -19,7 +23,6 @@
   .typing-container {
     display: flex;
     align-items: flex-end;
-    background-color: lightgray;
 
     .correct {
       color: green;
