@@ -7,8 +7,11 @@ import styled from 'styled-components'
 const ESCAPE_KEYS = ["27", "Escape"];
 
 const StyledSpan = styled.span`
-  color: ${props => props.color};
-  background-color: ${props => props.backgroundColor ? props.backgroundColor : 'unset'};
+  &:before {
+    content: '|';
+    color: ${props => props.initial ? 'yellow' : 'lightgray'};
+    ${props => props.space ? 'top: -23px' : ''}
+  }
   &:after {
     content: '|';
     color: ${props => props.current ? 'yellow' : 'lightgray'};
@@ -16,67 +19,66 @@ const StyledSpan = styled.span`
 `
 
 const TypingTrainer = props => {
-    useEffect(() => {
-        console.log('Rendered')
-    })
+  useEffect(() => {
+      console.log('Rendered')
+  })
 
-    const text = 'loverm asdf aewasdcvasg asdf wa asdf awasdf asdf'.split('')
+  const text = 'The fox jumped over the lazy dog'.split('')
 
-    const [textWithProps, setTextWithProps] = useState(text.map(el => ({ text: el, current: false, color: 'gray', backgroundColor: 'unset' })))
+  const [textWithProps, setTextWithProps] = useState(text.map(el => ({ text: el, current: false, className: 'orig' })))
 
-    const [typedTexts, setTypedTexts] = useState([])
+  const [typedTexts, setTypedTexts] = useState([])
 
-    const keyhandler = ({ key }) => {
-      if (key === 'Backspace') {
-          typedTexts.pop()
-          setTypedTexts([...typedTexts])
-      } else if (key !== 'Shift') {
-          setTypedTexts([...typedTexts, key])
-      }
-    };
+  const keyhandler = ({ key }) => {
+    if (key === 'Backspace') {
+        typedTexts.pop()
+        setTypedTexts([...typedTexts])
+    } else if (typedTexts?.length < textWithProps?.length && key !== 'Shift') {
+        setTypedTexts([...typedTexts, key])
+    }
+  };
 
-    useEffect(() => {
-      textWithProps.forEach((el, index) => {
-        if (typedTexts.length > index) {
-          if (typedTexts.length-1 === index) {
-            el.current = true;
-          } else {
-            el.current = false;
-          }
+  useEffect(() => {
+    textWithProps.forEach((el, index) => {
+      if (typedTexts.length > index) {
+        if (typedTexts.length-1 === index) {
+          el.current = true;
+        } else {
+          el.current = false;
+        }
 
-          const typedText = typedTexts[index]
-          if (el.text === typedText) {
-            el.color = 'green'
+        const typedText = typedTexts[index]
+        if (el.text === typedText) {
+          el.className = 'correct'
 
-            if (el.text === ' ') {
-              el.backgroundColor = 'unset'
-            }
-          } else {
-            el.color = 'red'
-
-            if (el.text === ' ') {
-              el.backgroundColor = 'red'
-            }
+          if (el.text === ' ') {
+            el.className = 'correct-space'
           }
         } else {
-          el.color = 'grey'
-          el.current = false
-          el.backgroundColor = 'unset'
+          el.className = 'wrong'
+
+          if (el.text === ' ') {
+            el.className = 'wrong-space'
+          }
         }
-      })
+      } else {
+        el.className = 'orig'
+        el.current = false
+      }
+    })
 
-      setTextWithProps([...textWithProps])
-    }, [typedTexts])
+    setTextWithProps([...textWithProps])
+  }, [typedTexts])
 
-    useEventListener("keydown", keyhandler);
+  useEventListener("keydown", keyhandler);
 
-    return (
-        <div className='typing-trainer'>
-            {textWithProps?.map((el, index) => (
-                <StyledSpan current={el.current} color={el.color} backgroundColor={el.backgroundColor} key={index}>{el.text}</StyledSpan>
-            ))}
-        </div>
-    )
+  return (
+    <div className='typing-trainer'>
+        {textWithProps?.map((el, index) => (
+            <StyledSpan initial={typedTexts.length === 0 && index === 0} current={el.current} space={el.text === ' '} className={el.className} key={index}>{el.text}</StyledSpan>
+        ))}
+    </div>
+  )
 }
 
 export { TypingTrainer }
