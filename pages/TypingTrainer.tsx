@@ -11,12 +11,12 @@ const StyledSpan = styled.span`
   &:before {
     content: '|';
     color: ${props => props.initial ? 'yellow' : 'lightgray'};
-    ${props => props.space ? `position: relative; top: -23px;` : ''}
+    ${props => props.children === ' ' ? `position: relative; top: -23px;` : ''}
   }
   &:after {
     content: '|';
     color: ${props => props.current ? 'yellow' : 'lightgray'};
-    ${props => props.space ? `position: relative; top: -23px;` : ''}
+    ${props => props.children === ' ' ? `position: relative; top: -23px;` : ''}
   }
 `
 
@@ -78,7 +78,7 @@ const TypingTrainer = props => {
     <div className='typing-trainer p-5'>
       <div className='typing-container p-5'>
           {textWithProps?.map((el, index) => (
-              <StyledSpan initial={typedTexts.length === 0 && index === 0} current={el.current} space={el.text === ' '} className={el.className} key={index}>{el.text}</StyledSpan>
+              <StyledSpan initial={typedTexts.length === 0 && index === 0} current={el.current} className={el.className} key={index}>{el.text}</StyledSpan>
           ))}
       </div>
     </div>
