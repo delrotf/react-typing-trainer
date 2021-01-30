@@ -8,21 +8,15 @@ const ESCAPE_KEYS = ["27", "Escape"]
 const cursorColor = '#e2b714'
 
 const StyledSpan = styled.span`
-  ${props => props.children === ' ' ? 'height: 1px;' : ''}
+  ${props => props.children === ' ' ? 'height: 1px; position: relative; left: 5px;' : ''}
   &:before {
-    content: '|';
-    animation: blinker 1s linear infinite;
-    font-size: 36px;
-    color: ${props => props.initial ? cursorColor : 'transparent'};
-    ${props => props.children === ' ' ? `position: relative; top: -23px;` : ''}
-  }
-  &:after {
     content: '|';
     animation: blinker 1s linear infinite;
     font-size: 36px;
     color: ${props => props.current ? cursorColor : 'transparent'};
     ${props => props.children === ' ' ? `position: relative; top: -23px;` : ''}
   }
+
   @keyframes blinker {
     50% {
       opacity: 0;
@@ -56,13 +50,13 @@ const TypingTrainer = props => {
 
   useEffect(() => {
     textWithProps.forEach((el, index) => {
-      if (typedTexts.length > index) {
-        if (typedTexts.length-1 === index) {
-          el.current = true;
-        } else {
-          el.current = false;
-        }
+      if (typedTexts.length === index) {
+        el.current = true;
+      } else {
+        el.current = false;
+      }
 
+      if (typedTexts.length > index) {
         const typedText = typedTexts[index]
         if (el.text === typedText) {
           el.className = 'correct'
@@ -79,7 +73,6 @@ const TypingTrainer = props => {
         }
       } else {
         el.className = 'orig'
-        el.current = false
       }
     })
 
