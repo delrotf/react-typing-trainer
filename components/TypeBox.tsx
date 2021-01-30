@@ -28,7 +28,7 @@ const TypeBox = props => {
 
   const [textWithProps, setTextWithProps] = useState(text.map(el => ({ text: el, current: false, className: 'orig' })))
 
-  const [typedTexts, setTypedTexts] = useState([])
+  const { typedTexts, setTypedTexts } = useContext(TypingContext)
 
   const keyPressHandler = ({ key }) => {
     if (typedTexts.length < textWithProps.length) {
