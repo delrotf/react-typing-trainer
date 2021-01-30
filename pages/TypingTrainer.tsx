@@ -9,7 +9,7 @@ const TypingTrainer = props => {
   return (
     <div className="typing-trainer p-5">
       <TypeBox />
-      {text?.length === typedTexts?.length && <Metrics/>}
+      <Metrics/>
     </div>
   );
 };
