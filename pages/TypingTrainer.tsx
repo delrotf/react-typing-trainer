@@ -8,13 +8,13 @@ const ESCAPE_KEYS = ["27", "Escape"]
 const cursorColor = '#e2b714'
 
 const StyledSpan = styled.span`
-  ${props => props.children === ' ' ? 'height: 1px; position: relative; left: 5px;' : ''}
+  ${props => props.children === ' ' ? 'height: 1px; width: 10px; position: relative; left: 5px;' : ''}
   &:before {
     content: '|';
     animation: blinker 1s linear infinite;
     font-size: 36px;
     color: ${props => props.current ? cursorColor : 'transparent'};
-    ${props => props.children === ' ' ? `position: relative; top: -23px;` : ''}
+    ${props => props.children === ' ' ? `position: relative; top: -23px; left: -5px` : ''}
   }
 
   @keyframes blinker {
