@@ -1,11 +1,18 @@
-import React, { useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
+import { TypingContext, TypingContextProvider } from "../context/typing-context";
 import { useEventListener } from "../hooks/useEventListener";
 
 const ESCAPE_KEYS = ["27", "Escape"];
 
-export const TypingTrainer = props => {
+const TypingTrainer = props => {
+  useEffect(()=> {
+    console.log('Rendered')
+  })
+
+  const {typedKeys, setTypedKeys} = useContext(TypingContext)
   const keyhandler = ({ key }) => {
-    console.log("key", key);
+    setTypedKeys([{...typedKeys}, key])
+    console.log("key", key, typedKeys);
     if (ESCAPE_KEYS.includes(String(key))) {
       console.log("Escape key pressed!");
     }
@@ -22,5 +29,15 @@ export const TypingTrainer = props => {
 
   // useEventListener("mousedown", mousehandler, element.current);
 
-  return <div>hello world</div>
+  return (
+    <TypingContextProvider>
+    <div>
+    {typedKeys?.map((el, index) => {
+      <span key={index}>{el}asdf</span>
+    })}
+    </div>
+    </TypingContextProvider>
+    )
 }
+
+export { TypingTrainer}
