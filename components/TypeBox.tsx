@@ -24,11 +24,10 @@ const StyledSpan = styled.span`
 `
 
 const TypeBox = props => {
-  const text = 'The fox jumped over the lazy dog'.split('')
+  const { typedTexts, setTypedTexts, text } = useContext(TypingContext)
 
   const [textWithProps, setTextWithProps] = useState(text.map(el => ({ text: el, current: false, className: 'orig' })))
 
-  const { typedTexts, setTypedTexts } = useContext(TypingContext)
 
   const keyPressHandler = ({ key }) => {
     if (typedTexts.length < textWithProps.length) {
