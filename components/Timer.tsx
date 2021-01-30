@@ -1,12 +1,14 @@
-import React, { useContext, useEffect } from 'react';
-import { useTimer } from 'react-timer-hook';
-import { TypingContext } from '../context/typing-context';
+import React, { useContext, useEffect } from "react";
+import { useTimer } from "react-timer-hook";
+import { TypingContext } from "../context/typing-context";
 
 const Timer = ({ expiryTimestamp }) => {
   const { text, typedTexts } = useContext(TypingContext);
+  const typedTextsLength = typedTexts.length;
 
-  const time = new Date();
-  time.setSeconds(time.getSeconds() + 180);
+  const onExpireHandler = () => {
+    pause();
+  };
 
   const {
     seconds,
@@ -15,28 +17,45 @@ const Timer = ({ expiryTimestamp }) => {
     start,
     pause,
     resume,
-    restart,
-  } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
-
-  if (!typedTexts.length) {
-    pause()
-  }
+    restart
+  } = useTimer({
+    expiryTimestamp,
+    onExpire: onExpireHandler
+  });
 
   useEffect(() => {
-    if (!isRunning) {
-      restart(time)
+    if (!typedTextsLength) {
+      pause();
+    } else if (!isRunning && typedTextsLength === 1) {
+      restart(expiryTimestamp);
     }
-  }, [isRunning])
+  }, [typedTextsLength]);
 
   return (
-    <div className='timer' style={{textAlign: 'center'}}>
-      <div style={{fontSize: '100px'}}>
-        <span>{minutes}</span>:<span>{seconds}</span>
+    <div className="timer">
+      <div>
+        <div className="d-inline-flex">
+          <span className="digit">{minutes}</span>
+          <span className="colon">
+            <span />
+            <span />
+          </span>
+          {seconds.toString().split("").length === 1 && (
+            <span className="digit">0</span>
+          )}
+          {seconds
+            .toString()
+            .split("")
+            .map((el, index) => (
+              <span key={index} className="digit">
+                {el}
+              </span>
+            ))}
+        </div>
+        <p>{isRunning ? "Running" : "Not running"}</p>
       </div>
-      <p>{isRunning ? 'Running' : 'Not running'}</p>
-
     </div>
   );
-}
+};
 
-export { Timer }
+export { Timer };

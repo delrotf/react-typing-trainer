@@ -20,7 +20,7 @@ body {
 }
 
 .timer {
-  span {
+  .digit {
     position: relative;
     display: flex;
     flex: 0 1 25%;
@@ -29,6 +29,7 @@ body {
     border-radius: 5px;
     padding: 10px 12px;
     color: white;
+    margin: 3px;
 
     &:after {
       position: absolute;
@@ -41,6 +42,21 @@ body {
       height: 2px;
       background-color: #232323;
       opacity: 0.4;
+    }
+  }
+  .colon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+
+    span {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background-color: #404549;
+      border-radius: 6px;
+      margin: 5px 0px;
     }
   }
 }
