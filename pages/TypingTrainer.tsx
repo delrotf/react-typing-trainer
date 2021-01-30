@@ -5,18 +5,18 @@ import { useEventListener } from "../hooks/useEventListener";
 import styled from 'styled-components'
 
 const ESCAPE_KEYS = ["27", "Escape"]
-const bgColor = '#323437'
+const cursorColor = '#e2b714'
 
 const StyledSpan = styled.span`
   ${props => props.children === ' ' ? 'height: 1px;' : ''}
   &:before {
     content: '|';
-    color: ${props => props.initial ? 'yellow' : 'transparent'};
+    color: ${props => props.initial ? cursorColor : 'transparent'};
     ${props => props.children === ' ' ? `position: relative; top: -23px;` : ''}
   }
   &:after {
     content: '|';
-    color: ${props => props.current ? 'yellow' : 'transparent'};
+    color: ${props => props.current ? cursorColor : 'transparent'};
     ${props => props.children === ' ' ? `position: relative; top: -23px;` : ''}
   }
 `
