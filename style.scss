@@ -66,6 +66,9 @@ body {
   }
 
   .type-box {
+    display: flex;
+    justify-content: center;
+
     .type-container {
       display: inline-flex;
       align-items: flex-end;

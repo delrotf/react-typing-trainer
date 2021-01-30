@@ -5,6 +5,7 @@ import { TypingContext } from "../context/typing-context";
 const Timer = ({ expiryTimestamp }) => {
   const { text, typedTexts } = useContext(TypingContext);
   const typedTextsLength = typedTexts.length;
+  const textLength = text.length;
 
   const onExpireHandler = () => {
     pause();
@@ -24,7 +25,7 @@ const Timer = ({ expiryTimestamp }) => {
   });
 
   useEffect(() => {
-    if (!typedTextsLength) {
+    if (!typedTextsLength || textLength === typedTextsLength) {
       pause();
     } else if (!isRunning && typedTextsLength === 1) {
       restart(expiryTimestamp);
