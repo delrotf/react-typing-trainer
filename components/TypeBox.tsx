@@ -77,11 +77,13 @@ const TypeBox = props => {
   useEventListener("keydown", keyDownHandler);
 
   return (
-      <div className='type-box p-5 flex-wrap'>
+    <div className='type-box'>
+      <div className='type-container p-5 flex-wrap'>
           {textWithProps?.map((el, index) => (
               <StyledSpan initial={typedTexts.length === 0 && index === 0} current={el.current} className={el.className} key={index}>{el.text}</StyledSpan>
           ))}
       </div>
+    </div>
   )
 }
 
