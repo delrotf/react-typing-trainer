@@ -20,6 +20,9 @@ body {
 }
 
 .timer {
+  display: flex;
+  justify-content: center;
+  
   .digit {
     position: relative;
     display: flex;

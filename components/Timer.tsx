@@ -52,7 +52,9 @@ const Timer = ({ expiryTimestamp }) => {
               </span>
             ))}
         </div>
-        <p>{isRunning ? "Running" : "Not running"}</p>
+        <div className="d-flex justify-content-center text-muted">
+          <span>{isRunning ? "Running" : "Not running"}</span>
+        </div>
       </div>
     </div>
   );
