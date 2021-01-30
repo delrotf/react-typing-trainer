@@ -14,3 +14,22 @@
     }
   }
 }
+
+.typing-trainer {
+  background-color: lightgray;
+  .correct {
+    color: green;
+  }
+  .correct-space {
+    background-color: unset;
+  }
+  .wrong {
+    color: red;
+  }
+  .wrong-space {
+    background-color: red;
+  }
+  .orig {
+    color: gray
+  }
+}

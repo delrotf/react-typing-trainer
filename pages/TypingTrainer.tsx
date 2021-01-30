@@ -7,7 +7,12 @@ import styled from 'styled-components'
 const ESCAPE_KEYS = ["27", "Escape"];
 
 const StyledSpan = styled.span`
-  color: ${props => props.color}
+  color: ${props => props.color};
+  background-color: ${props => props.backgroundColor ? props.backgroundColor : 'unset'};
+  &:after {
+    content: '|';
+    color: ${props => props.current ? 'yellow' : 'lightgray'};
+  }
 `
 
 const TypingTrainer = props => {
@@ -17,7 +22,7 @@ const TypingTrainer = props => {
 
     const text = 'loverm asdf aewasdcvasg asdf wa asdf awasdf asdf'.split('')
 
-    const [textWithProps, setTextWithProps] = useState(text.map(el => ({ text: el, color: 'gray' })))
+    const [textWithProps, setTextWithProps] = useState(text.map(el => ({ text: el, current: false, color: 'gray', backgroundColor: 'unset' })))
 
     const [typedTexts, setTypedTexts] = useState([])
 
@@ -25,35 +30,50 @@ const TypingTrainer = props => {
       if (key === 'Backspace') {
           typedTexts.pop()
           setTypedTexts([...typedTexts])
-      } else {
+      } else if (key !== 'Shift') {
           setTypedTexts([...typedTexts, key])
       }
-
-      console.log("key", key);
     };
 
     useEffect(() => {
-      console.log("typedTexts", typedTexts);
-      typedTexts.forEach((el, index) => {
-        const textWithProp = textWithProps[index]
-        if (el === textWithProp.text) {
-          textWithProp.color = 'green'
+      textWithProps.forEach((el, index) => {
+        if (typedTexts.length > index) {
+          if (typedTexts.length-1 === index) {
+            el.current = true;
+          } else {
+            el.current = false;
+          }
+
+          const typedText = typedTexts[index]
+          if (el.text === typedText) {
+            el.color = 'green'
+
+            if (el.text === ' ') {
+              el.backgroundColor = 'unset'
+            }
+          } else {
+            el.color = 'red'
+
+            if (el.text === ' ') {
+              el.backgroundColor = 'red'
+            }
+          }
         } else {
-          textWithProp.color = 'red'
+          el.color = 'grey'
+          el.current = false
+          el.backgroundColor = 'unset'
         }
-
-        setTextWithProps([...textWithProps])
       })
-      console.log("textWithProps", {...textWithProps});
 
+      setTextWithProps([...textWithProps])
     }, [typedTexts])
 
     useEventListener("keydown", keyhandler);
 
     return (
-        <div>
+        <div className='typing-trainer'>
             {textWithProps?.map((el, index) => (
-                <StyledSpan color={el.color} key={index}>{el.text}</StyledSpan>
+                <StyledSpan current={el.current} color={el.color} backgroundColor={el.backgroundColor} key={index}>{el.text}</StyledSpan>
             ))}
         </div>
     )
