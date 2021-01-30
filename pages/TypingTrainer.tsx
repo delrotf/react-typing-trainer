@@ -12,12 +12,14 @@ const StyledSpan = styled.span`
   &:before {
     content: '|';
     animation: blinker 1s linear infinite;
+    font-size: 36px;
     color: ${props => props.initial ? cursorColor : 'transparent'};
     ${props => props.children === ' ' ? `position: relative; top: -23px;` : ''}
   }
   &:after {
     content: '|';
     animation: blinker 1s linear infinite;
+    font-size: 36px;
     color: ${props => props.current ? cursorColor : 'transparent'};
     ${props => props.children === ' ' ? `position: relative; top: -23px;` : ''}
   }
@@ -39,12 +41,16 @@ const TypingTrainer = props => {
 
   const [typedTexts, setTypedTexts] = useState([])
 
-  const keyhandler = ({ key }) => {
+  const keyPressHandler = ({ key }) => {
+    if (typedTexts.length < textWithProps.length) {
+      setTypedTexts([...typedTexts, key])
+    }
+  };
+
+  const keyDownHandler = ({ key }) => {
     if (key === 'Backspace') {
         typedTexts.pop()
         setTypedTexts([...typedTexts])
-    } else if (typedTexts?.length < textWithProps?.length && key !== 'Shift') {
-        setTypedTexts([...typedTexts, key])
     }
   };
 
@@ -80,7 +86,8 @@ const TypingTrainer = props => {
     setTextWithProps([...textWithProps])
   }, [typedTexts])
 
-  useEventListener("keydown", keyhandler);
+  useEventListener("keypress", keyPressHandler);
+  useEventListener("keydown", keyDownHandler);
 
   return (
     <div className='typing-trainer p-5'>
