@@ -5,15 +5,17 @@ import { TypeBox } from "../components/TypeBox";
 import { TypingContext } from "../context/typing-context";
 
 const TypingTrainer = props => {
-  const { text, typedTexts} = useContext(TypingContext)
+  const { text, typedTexts } = useContext(TypingContext);
   const time = new Date();
   time.setSeconds(time.getSeconds() + 20); // 10 minutes timer
 
   return (
     <div className="typing-trainer p-5">
-      <Timer expiryTimestamp={time}/>
-      <TypeBox />
-      <Metrics/>
+      <div>
+        <Timer expiryTimestamp={time} />
+        <TypeBox />
+        <Metrics />
+      </div>
     </div>
   );
 };

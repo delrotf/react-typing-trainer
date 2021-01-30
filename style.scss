@@ -20,6 +20,13 @@ body {
 }
 
 .typing-trainer {
+  display: flex;
+  justify-content: center;
+
+  > div {
+    max-width: 900px;
+  }
+
   .timer {
     display: flex;
     justify-content: center;
