@@ -6,12 +6,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import "./style.scss";
 import { TypingTrainer } from "./pages/TypingTrainer";
+import { TypingContextProvider } from "./context/typing-context";
 
 const App = () => {
   return (
     <BrowserRouter>
       {/*TODO put main here*/}
-      <TypingTrainer />
+      <TypingContextProvider>
+        <TypingTrainer />
+      </TypingContextProvider>
     </BrowserRouter>
   );
 };

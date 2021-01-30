@@ -4,20 +4,20 @@ import { LoginPage } from "../pages";
 export const TypingContext = React.createContext({
   typedKey: null,
   setTypedKey: null,
-  typedKeys: null,
-  setTypedKeys: null,
+  typedTexts: null,
+  setTypedTexts: null,
 });
 
 const TypingContextProvider = props => {
   const [typedKey, setTypedKey] = useState();
-  const [typedKeys, setTypedKeys] = useState([]);
+  const [typedTexts, setTypedTexts] = useState([]);
   return (
     <TypingContext.Provider
       value={{
         typedKey,
         setTypedKey,
-        typedKeys,
-        setTypedKeys
+        typedTexts,
+        setTypedTexts
       }}
     >
       {props.children}
