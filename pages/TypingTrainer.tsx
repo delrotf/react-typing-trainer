@@ -11,13 +11,20 @@ const StyledSpan = styled.span`
   ${props => props.children === ' ' ? 'height: 1px;' : ''}
   &:before {
     content: '|';
+    animation: blinker 1s linear infinite;
     color: ${props => props.initial ? cursorColor : 'transparent'};
     ${props => props.children === ' ' ? `position: relative; top: -23px;` : ''}
   }
   &:after {
     content: '|';
+    animation: blinker 1s linear infinite;
     color: ${props => props.current ? cursorColor : 'transparent'};
     ${props => props.children === ' ' ? `position: relative; top: -23px;` : ''}
+  }
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
   }
 `
 
