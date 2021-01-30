@@ -7,14 +7,16 @@ import styled from 'styled-components'
 const ESCAPE_KEYS = ["27", "Escape"];
 
 const StyledSpan = styled.span`
+  ${props => props.children === ' ' ? 'height: 1px;' : ''}
   &:before {
     content: '|';
     color: ${props => props.initial ? 'yellow' : 'lightgray'};
-    ${props => props.space ? 'top: -23px' : ''}
+    ${props => props.space ? `position: relative; top: -23px;` : ''}
   }
   &:after {
     content: '|';
     color: ${props => props.current ? 'yellow' : 'lightgray'};
+    ${props => props.space ? `position: relative; top: -23px;` : ''}
   }
 `
 
@@ -73,10 +75,12 @@ const TypingTrainer = props => {
   useEventListener("keydown", keyhandler);
 
   return (
-    <div className='typing-trainer'>
-        {textWithProps?.map((el, index) => (
-            <StyledSpan initial={typedTexts.length === 0 && index === 0} current={el.current} space={el.text === ' '} className={el.className} key={index}>{el.text}</StyledSpan>
-        ))}
+    <div className='typing-trainer p-5'>
+      <div className='typing-container p-5'>
+          {textWithProps?.map((el, index) => (
+              <StyledSpan initial={typedTexts.length === 0 && index === 0} current={el.current} space={el.text === ' '} className={el.className} key={index}>{el.text}</StyledSpan>
+          ))}
+      </div>
     </div>
   )
 }

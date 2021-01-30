@@ -16,23 +16,29 @@
 }
 
 .typing-trainer {
-  display: flex;
-  align-items: flex-end;
-  background-color: lightgray;
-  .correct {
-    color: green;
-  }
-  .correct-space {
-    background-color: unset;
-  }
-  .wrong {
-    color: red;
-  }
-  .wrong-space {
-    background-color: red;
-    height: 2px;
-  }
-  .orig {
-    color: gray
+  .typing-container {
+    display: flex;
+    align-items: flex-end;
+    background-color: lightgray;
+
+    .space {
+      height: 1px;
+    }
+
+    .correct {
+      color: green;
+    }
+    .correct-space {
+      background-color: unset;
+    }
+    .wrong {
+      color: red;
+    }
+    .wrong-space {
+      background-color: red;
+    }
+    .orig {
+      color: gray;
+    }
   }
 }
