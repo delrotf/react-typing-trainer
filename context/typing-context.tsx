@@ -5,11 +5,13 @@ export const TypingContext = React.createContext({
   text: null,
   setText: null,
   typedTexts: null,
-  setTypedTexts: null,
+  setTypedTexts: null
 });
 
 const TypingContextProvider = props => {
-  const [text, setText] = useState('The quick bron fox jumped over the lazy dog'.split(''));
+  const [text, setText] = useState(
+    "The quick brown fox jumped over the lazy dog".split("")
+  );
   const [typedTexts, setTypedTexts] = useState([]);
   return (
     <TypingContext.Provider

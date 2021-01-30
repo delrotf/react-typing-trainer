@@ -15,12 +15,6 @@ const StyledSpan = styled.span`
     color: ${props => props.current ? cursorColor : 'transparent'};
     ${props => props.children === ' ' ? `position: relative; top: -23px; left: -5px` : ''}
   }
-
-  @keyframes blinker {
-    50% {
-      opacity: 0;
-    }
-  }
 `
 
 const TypeBox = props => {
