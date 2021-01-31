@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 export const TypingContext = React.createContext({
   text: null,
@@ -7,8 +7,8 @@ export const TypingContext = React.createContext({
   setTypedTexts: null,
   secondsLapsed: null,
   setSecondsLapsed: null,
-  done: false,
-  setDone: null,
+  done: null,
+  // setDone: null,
 });
 
 const TypingContextProvider = props => {
@@ -17,7 +17,8 @@ const TypingContextProvider = props => {
   );
   const [typedTexts, setTypedTexts] = useState([]);
   const [secondsLapsed, setSecondsLapsed] = useState(0);
-  const [done, setDone] = useState(false);
+  // const [done, setDone] = useState(false);
+  const done = useRef(false)
 
   return (
     <TypingContext.Provider
@@ -28,8 +29,8 @@ const TypingContextProvider = props => {
         setTypedTexts,
         secondsLapsed,
         setSecondsLapsed,
-        done,
-        setDone
+        done
+        // setDone
       }}
     >
       {props.children}
