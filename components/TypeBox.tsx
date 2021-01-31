@@ -1,5 +1,5 @@
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { TypingContext } from "../context/typing-context";
 import { useEventListener } from "../hooks/useEventListener";
 import styled from 'styled-components'
@@ -73,8 +73,11 @@ const TypeBox = props => {
   useEventListener("keypress", keyPressHandler);
   useEventListener("keydown", keyDownHandler);
 
+  const buttonRef = useRef()
+
   const onClickHandler = () => {
     setTypedTexts([])
+    buttonRef.current.blur()
   }
 
   return (
@@ -87,7 +90,7 @@ const TypeBox = props => {
         </div>
       </div>
       <div className='d-flex justify-content-center'>
-        <Button variant='dark' onClick={onClickHandler}><FontAwesomeIcon icon={faRedo} /></Button>
+        <Button ref={buttonRef} variant='dark' onClick={onClickHandler}><FontAwesomeIcon icon={faRedo} /></Button>
       </div>
     </div>
   )
