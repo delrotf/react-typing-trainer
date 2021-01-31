@@ -9,17 +9,16 @@ const TypingTrainer = props => {
   const time = new Date();
   time.setSeconds(time.getSeconds() + timerSecCount);
 
-  return (
-    <div className="typing-trainer p-5">
-      {!secondsLapsed && (
-        <div>
-          <Timer expiryTimestamp={time} />
-          <TypeBox />
-        </div>
-      )}
-      {secondsLapsed && <Metrics />}
+  const display = !secondsLapsed ? (
+    <div>
+      <Timer expiryTimestamp={time} />
+      <TypeBox />
     </div>
+  ) : (
+    <Metrics />
   );
+
+  return <div className="typing-trainer p-5">{display}</div>;
 };
 
 export { TypingTrainer };
