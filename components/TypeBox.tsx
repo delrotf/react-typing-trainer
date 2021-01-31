@@ -21,21 +21,20 @@ const StyledSpan = styled.span`
 `
 
 const TypeBox = props => {
-  const { typedTexts, setTypedTexts, text, setSecondsLapsed, done } = useContext(TypingContext)
+  const { typedTexts, setTypedTexts, text, setSecondsLapsed, done, setDone } = useContext(TypingContext)
 
-  const chars = text.split('');
-  const [textWithProps, setTextWithProps] = useState(chars.map(el => ({ text: el, current: false, className: 'orig' })))
+  const [textWithProps, setTextWithProps] = useState(text.split('').map(el => ({ text: el, current: false, className: 'orig' })))
 
   const keyPressHandler = ({ key }) => {
-    if (!done.current && typedTexts.length <                    textWithProps.length) {
+    if (!done && typedTexts.length <                    textWithProps.length) {
       setTypedTexts([...typedTexts, key])
     } else {
-      done.current = true
+      setDone(true)
     }
   };
 
   const keyDownHandler = ({ key }) => {
-    if (!done.current && key === 'Backspace') {
+    if (!done && key === 'Backspace') {
         typedTexts.pop()
         setTypedTexts([...typedTexts])
     }
@@ -80,7 +79,7 @@ const TypeBox = props => {
 
   const onClickHandler = () => {
     setTypedTexts([])
-    done.current = false;
+    setDone(false);
     setSecondsLapsed(0);
   }
 

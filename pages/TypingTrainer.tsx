@@ -6,7 +6,7 @@ import { TypingContextProvider } from "../context/typing-context";
 
 const TypingTrainer = props => {
   const time = new Date();
-  time.setSeconds(time.getSeconds() + 20); // 10 minutes timer
+  time.setSeconds(time.getSeconds() + 10); // 10 minutes timer
 
   return (
     <div className="typing-trainer p-5">

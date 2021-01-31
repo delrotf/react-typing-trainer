@@ -115,10 +115,10 @@ const Metrics = props => {
   );
 
   useEffect(() => {
-    if (done.current) {
+    if (done) {
       addRecordHandler({username, accuracy, completion, wpm, date: new Date()});
     }
-  }, [done.current]);
+  }, [done]);
 
   const removeRecordHandler = useCallback(
     recordId => {

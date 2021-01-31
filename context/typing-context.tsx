@@ -8,6 +8,7 @@ export const TypingContext = React.createContext({
   secondsLapsed: null,
   setSecondsLapsed: null,
   done: null,
+  setDone: null
 });
 
 const TypingContextProvider = props => {
@@ -16,7 +17,7 @@ const TypingContextProvider = props => {
   );
   const [typedTexts, setTypedTexts] = useState([]);
   const [secondsLapsed, setSecondsLapsed] = useState(0);
-  const done = useRef(false)
+  const [done, setDone] = useState(false);
 
   return (
     <TypingContext.Provider
@@ -27,7 +28,8 @@ const TypingContextProvider = props => {
         setTypedTexts,
         secondsLapsed,
         setSecondsLapsed,
-        done
+        done,
+        setDone
       }}
     >
       {props.children}
