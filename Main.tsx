@@ -4,6 +4,7 @@ import { Route } from "react-router-dom";
 import { HomePage } from "./pages/HomePage";
 import { LoginContextProvider } from "./context";
 import { TypingTrainer } from "./pages/TypingTrainer";
+import { TypingContextProvider } from "./context/typing-context";
 
 const Main = props => {
   return (
@@ -12,7 +13,9 @@ const Main = props => {
         {/*<Route path="/" exact component={LoginPage} />
         <Route path="/home" exact component={HomePage} />
         <Route path="/" exact component={TypingTrainer} />*/}
-        <TypingTrainer />
+        <TypingContextProvider>
+          <TypingTrainer />
+        </TypingContextProvider>
       </LoginContextProvider>
     </div>
   );

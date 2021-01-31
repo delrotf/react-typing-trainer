@@ -27,7 +27,7 @@ const TypeBox = props => {
   const [textWithProps, setTextWithProps] = useState(chars.map(el => ({ text: el, current: false, className: 'orig' })))
 
   const keyPressHandler = ({ key }) => {
-    if (!done.current && typedTexts.length < textWithProps.length) {
+    if (!done.current && typedTexts.length <                    textWithProps.length) {
       setTypedTexts([...typedTexts, key])
     } else {
       done.current = true
