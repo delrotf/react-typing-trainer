@@ -110,7 +110,7 @@ const Metrics = props => {
 
   useEffect(() => {
     if (done) {
-      addRecordHandler({user: 'user1', accuracy, completion, wpm, date: new Date()});
+      addRecordHandler({username: 'user1', accuracy, completion, wpm, date: new Date()});
     }
   }, [done]);
 
