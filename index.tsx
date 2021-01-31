@@ -12,9 +12,7 @@ const App = () => {
   return (
     <BrowserRouter>
       {/*TODO put main here*/}
-      <TypingContextProvider>
-        <TypingTrainer />
-      </TypingContextProvider>
+        <Main />
     </BrowserRouter>
   );
 };

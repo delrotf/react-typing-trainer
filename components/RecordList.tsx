@@ -13,9 +13,9 @@ const RecordList = props => {
       <ul>
         {records.map(el => (
           <li key={el.id} onClick={onRemoveItem.bind(this, el.id)}>
-            <span>{el.wpm}</span>
-            <span>{el.accuracy}</span>
-            <span>{el.completion}x</span>
+            <span>{el.wpm?.toFixed(2)}</span>
+            <span>{el.accuracy?.toFixed(2)}</span>
+            <span>{el.completion?.toFixed(2)}x</span>
           </li>
         ))}
       </ul>
