@@ -7,9 +7,9 @@ const RecordList = props => {
 
   return (
     <section className="ingredient-list">
-      <h2>Loaded Ingredients</h2>
+      <h2>Records</h2>
       <ul>
-        {props.ingredients.map(ig => (
+        {props.records.map(ig => (
           <li key={ig.id} onClick={onRemoveItem.bind(this, ig.id)}>
             <span>{ig.title}</span>
             <span>{ig.amount}x</span>

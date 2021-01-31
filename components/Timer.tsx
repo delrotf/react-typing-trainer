@@ -3,14 +3,16 @@ import { useTimer } from "react-timer-hook";
 import { TypingContext } from "../context/typing-context";
 
 const Timer = ({ expiryTimestamp }) => {
-  const { text, typedTexts, setSecondsLapsed } = useContext(TypingContext);
+  const { text, typedTexts, setSecondsLapsed, done, setDone } = useContext(
+    TypingContext
+  );
   const typedTextsLength = typedTexts.length;
   const textLength = text.length;
 
   const onExpireHandler = () => {
     pause();
-    console.log(startMin.current, startSec.current, minutes, seconds);
-    setSecondsLapsed(startMin.current * 60 + startSec.current);
+    setSecondsLapsed(startMin * 60 + startSec);
+    setDone(true);
   };
 
   const {
@@ -34,9 +36,8 @@ const Timer = ({ expiryTimestamp }) => {
       pause();
 
       if (textLength === typedTextsLength) {
-        setSecondsLapsed(
-          startMin * 60 + startSec - (minutes * 60 + seconds)
-        );
+        setSecondsLapsed(startMin * 60 + startSec - (minutes * 60 + seconds));
+        setDone(true)
       }
     } else if (!isRunning && typedTextsLength === 1) {
       restart(expiryTimestamp);
@@ -58,22 +59,24 @@ const Timer = ({ expiryTimestamp }) => {
           {isRunning && seconds.toString().split("").length === 1 && (
             <span className="digit">0</span>
           )}
-          {!isRunning && startSec
-            .toString()
-            .split("")
-            .map((el, index) => (
-              <span key={index} className="digit">
-                {el}
-              </span>
-            ))}
-          {isRunning && seconds
-            .toString()
-            .split("")
-            .map((el, index) => (
-              <span key={index} className="digit">
-                {el}
-              </span>
-            ))}
+          {!isRunning &&
+            startSec
+              .toString()
+              .split("")
+              .map((el, index) => (
+                <span key={index} className="digit">
+                  {el}
+                </span>
+              ))}
+          {isRunning &&
+            seconds
+              .toString()
+              .split("")
+              .map((el, index) => (
+                <span key={index} className="digit">
+                  {el}
+                </span>
+              ))}
         </div>
         <div className="d-flex justify-content-center text-muted">
           <span>{isRunning ? "Running" : "Not running"}</span>

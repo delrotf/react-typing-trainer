@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useEffect, useMemo, useReducer } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer
+} from "react";
 import { TypingContext } from "../context/typing-context";
 import useHttp from "../hooks/useHttp";
 import ErrorModal from "../ui/ErrorModal";
@@ -6,14 +12,14 @@ import RecordList from "./RecordList";
 
 const recordReducer = (currentRecords, action) => {
   switch (action.type) {
-    case 'SET':
+    case "SET":
       return action.records;
-    case 'ADD':
+    case "ADD":
       return [...currentRecords, action.record];
-    case 'DELETE':
+    case "DELETE":
       return currentRecords.filter(ing => ing.id !== action.id);
     default:
-      throw new Error('Should not get there!');
+      throw new Error("Should not get there!");
   }
 };
 
@@ -25,9 +31,7 @@ const Metrics = props => {
   const word = 5;
   const wordCount = typedTextsLength / word;
 
-  const wpm = secondsLapsed
-    ? wordCount / secondsLapsed * 60
-    : 0;
+  const wpm = secondsLapsed ? (wordCount / secondsLapsed) * 60 : 0;
 
   let accuracy = 0;
   if (JSON.stringify(text) === JSON.stringify(typedTexts)) {
@@ -61,38 +65,43 @@ const Metrics = props => {
   } = useHttp();
 
   useEffect(() => {
-    if (!isLoading && !error && reqIdentifer === 'REMOVE_INGREDIENT') {
-      dispatch({ type: 'DELETE', id: reqExtra });
-    } else if (!isLoading && !error && reqIdentifer === 'ADD_INGREDIENT') {
+    if (!isLoading && !error && reqIdentifer === "REMOVE_RECORD") {
+      dispatch({ type: "DELETE", id: reqExtra });
+    } else if (!isLoading && !error && reqIdentifer === "ADD_RECORD") {
       dispatch({
-        type: 'ADD',
+        type: "ADD",
         record: { id: data.name, ...reqExtra }
       });
     }
   }, [data, reqExtra, reqIdentifer, isLoading, error]);
 
   const filteredRecordsHandler = useCallback(filteredRecords => {
-    dispatch({ type: 'SET', records: filteredRecords });
+    dispatch({ type: "SET", records: filteredRecords });
   }, []);
 
-  const addRecordHandler = useCallback(record => {
-    sendRequest(
-      'https://react-typing-trainer-default-rtdb.firebaseio.com/records.json',
-      'POST',
-      JSON.stringify(record),
-      record,
-      'ADD_INGREDIENT'
-    );
-  }, [sendRequest]);
+  const baseUrl = "https://react-typing-trainer-default-rtdb.firebaseio.com";
+
+  const addRecordHandler = useCallback(
+    record => {
+      sendRequest(
+        `${baseUrl}/records.json`,
+        "POST",
+        JSON.stringify(record),
+        record,
+        "ADD_RECORD"
+      );
+    },
+    [sendRequest]
+  );
 
   const removeRecordHandler = useCallback(
     recordId => {
       sendRequest(
-        `https://react-typing-trainer-default-rtdb.firebaseio.com/records/${recordId}.json`,
-        'DELETE',
+        `${baseUrl}/records/${recordId}.json`,
+        "DELETE",
         null,
         recordId,
-        'REMOVE_INGREDIENT'
+        "REMOVE_RECORD"
       );
     },
     [sendRequest]
@@ -100,10 +109,7 @@ const Metrics = props => {
 
   const recordList = useMemo(() => {
     return (
-      <RecordList
-        records={userRecords}
-        onRemoveItem={removeRecordHandler}
-      />
+      <RecordList records={userRecords} onRemoveItem={removeRecordHandler} />
     );
   }, [userRecords, removeRecordHandler]);
 
@@ -121,7 +127,8 @@ const Metrics = props => {
       <div className="wpm">
         <span className="label">wpm</span>
         <span className="value">{wpm.toFixed(2)}</span>
-      </div>{" "}
+      </div>
+      {recordList}
     </div>
   );
 };

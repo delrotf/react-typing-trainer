@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { TypingContext } from "../context/typing-context";
 import { useEventListener } from "../hooks/useEventListener";
 import styled from 'styled-components'
-import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRedo } from "@fortawesome/free-solid-svg-icons";
 
@@ -21,24 +21,27 @@ const StyledSpan = styled.span`
 `
 
 const TypeBox = props => {
-  const { typedTexts, setTypedTexts, text } = useContext(TypingContext)
+  const { typedTexts, setTypedTexts, text, done, setDone } = useContext(TypingContext)
 
   const chars = text.split('');
   const [textWithProps, setTextWithProps] = useState(chars.map(el => ({ text: el, current: false, className: 'orig' })))
 
   const keyPressHandler = ({ key }) => {
-    if (typedTexts.length < textWithProps.length) {
+    if (!done && typedTexts.length < textWithProps.length) {
       setTypedTexts([...typedTexts, key])
+    } else {
+      setDone(true);
     }
   };
 
   const keyDownHandler = ({ key }) => {
-    if (key === 'Backspace') {
+    if (!done && key === 'Backspace') {
         typedTexts.pop()
         setTypedTexts([...typedTexts])
     }
   };
 
+  //set letters class whether correct or wrong
   useEffect(() => {
     textWithProps.forEach((el, index) => {
       if (typedTexts.length === index) {
@@ -77,6 +80,7 @@ const TypeBox = props => {
 
   const onClickHandler = () => {
     setTypedTexts([])
+    setDone(false)
   }
 
   const onFocusHandler = () => {
