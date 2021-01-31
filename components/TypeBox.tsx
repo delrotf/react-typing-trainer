@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { TypingContext } from "../context/typing-context";
 import { useEventListener } from "../hooks/useEventListener";
 import styled from 'styled-components'
-import { Button } from "react-bootstrap";
+import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRedo } from "@fortawesome/free-solid-svg-icons";
 
@@ -77,6 +77,9 @@ const TypeBox = props => {
 
   const onClickHandler = () => {
     setTypedTexts([])
+  }
+
+  const onFocusHandler = () => {
     buttonRef.current.blur()
   }
 
@@ -90,7 +93,9 @@ const TypeBox = props => {
         </div>
       </div>
       <div className='d-flex justify-content-center'>
-        <Button ref={buttonRef} variant='dark' onClick={onClickHandler}><FontAwesomeIcon icon={faRedo} /></Button>
+        <Button ref={buttonRef} variant='dark' onClick={onClickHandler}onFocus={onFocusHandler}>
+          <FontAwesomeIcon icon={faRedo} />
+        </Button>
       </div>
     </div>
   )
