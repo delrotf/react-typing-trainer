@@ -94,9 +94,7 @@ const Metrics = props => {
   useEffect(() => {
     if (!isLoading && !error && data && reqIdentifer === "LOAD_RECORDS") {
       const loadedRecords = [];
-      console.log("data", data);
       for (const key in data) {
-        console.log("key", key);
         loadedRecords.push({
           id: key, //from firebase
           username: data[key].username,
@@ -115,7 +113,6 @@ const Metrics = props => {
       dispatch({ type: "DELETE", id: reqExtra });
     } else if (!isLoading && !error && reqIdentifer === "ADD_RECORD") {
       const record = { id: data.name, ...reqExtra };
-      console.log("data,record", data, record);
 
       dispatch({
         type: "ADD",
@@ -146,14 +143,12 @@ const Metrics = props => {
         wpm,
         date: moment().format("MMMM Do YYYY, h:mm:ss a")
       };
-      console.log("add record", record);
       addRecordHandler(record);
     }
   }, [wpm]);
 
   const removeRecordHandler = useCallback(
     recordId => {
-      console.log("delete recordId", recordId);
       sendRequest(
         `${baseUrl}/records/${recordId}.json`,
         "DELETE",
