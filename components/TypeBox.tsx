@@ -71,15 +71,21 @@ const TypeBox = props => {
   useEventListener("keypress", keyPressHandler);
   useEventListener("keydown", keyDownHandler);
 
+  const onClickHandler = () => {
+    setTypedTexts([])
+  }
+
   return (
     <div className='type-box'>
-      <div className='type-container p-5 flex-wrap'>
-          {textWithProps?.map((el, index) => (
-              <StyledSpan current={el.current} className={el.className} key={index}>{el.text}</StyledSpan>
-          ))}
+      <div className='type-container'>
+        <div className='type-input p-5 flex-wrap'>
+            {textWithProps?.map((el, index) => (
+                <StyledSpan current={el.current} className={el.className} key={index}>{el.text}</StyledSpan>
+            ))}
+        </div>
       </div>
-      <div>
-        <Button>Restart</Button>
+      <div className='d-flex justify-content-center'>
+        <Button variant='primary' onClick={onClickHandler}>Restart</Button>
       </div>
     </div>
   )

@@ -73,29 +73,30 @@ body {
   }
 
   .type-box {
-    display: flex;
-    justify-content: center;
-
     .type-container {
-      display: inline-flex;
-      align-items: flex-end;
-      line-height: 1.5rem;
-      font-size: 1.5rem;
+      display: flex;
+      justify-content: center;
+      .type-input {
+        display: inline-flex;
+        align-items: flex-end;
+        line-height: 1.5rem;
+        font-size: 1.5rem;
 
-      .correct {
-        color: white;
-      }
-      .correct-space {
-        background-color: unset;
-      }
-      .wrong {
-        color: red;
-      }
-      .wrong-space {
-        background-color: red;
-      }
-      .orig {
-        color: gray;
+        .correct {
+          color: white;
+        }
+        .correct-space {
+          background-color: unset;
+        }
+        .wrong {
+          color: red;
+        }
+        .wrong-space {
+          background-color: red;
+        }
+        .orig {
+          color: gray;
+        }
       }
     }
   }
@@ -114,4 +115,5 @@ body {
     50% {
       opacity: 0;
     }
-  }}
+  }
+}
