@@ -24,7 +24,7 @@ const recordReducer = (currentRecords, action) => {
 };
 
 const Metrics = props => {
-  const { text, typedTexts, secondsLapsed } = useContext(TypingContext);
+  const { text, typedTexts, secondsLapsed, done } = useContext(TypingContext);
   const typedTextsLength = typedTexts.length;
   const textLength = text.length;
 
@@ -67,10 +67,7 @@ const Metrics = props => {
   } = useHttp();
 
   useEffect(() => {
-    sendRequest(
-      `${baseUrl}/records.json`,
-      "GET"
-    );
+    sendRequest(`${baseUrl}/records.json`, "GET", null, null, null);
   }, []);
 
   useEffect(() => {
@@ -111,6 +108,12 @@ const Metrics = props => {
     [sendRequest]
   );
 
+  useEffect(() => {
+    if (done) {
+      addRecordHandler({user: 'user1', accuracy, completion, wpm, date: new Date()});
+    }
+  }, [done]);
+
   const removeRecordHandler = useCallback(
     recordId => {
       sendRequest(
@@ -132,7 +135,6 @@ const Metrics = props => {
 
   return (
     <div className="metrics">
-      {error && <ErrorModal onClose={clear}>{error}</ErrorModal>}
       <div className="accuracy">
         <span className="label">Accuracy</span>
         <span className="value">{accuracy.toFixed(2)}</span>
