@@ -1,5 +1,4 @@
-import React, { useRef, useState } from "react";
-import { LoginPage } from "../pages";
+import React, { useState } from "react";
 
 export const TypingContext = React.createContext({
   text: null,
