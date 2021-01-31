@@ -3,13 +3,15 @@ import React, {
   useContext,
   useEffect,
   useMemo,
-  useReducer
+  useReducer,
+  useState
 } from "react";
 import { LoginContext } from "../context";
 import { TypingContext } from "../context/typing-context";
 import useHttp from "../hooks/useHttp";
 import ErrorModal from "../ui/ErrorModal";
 import RecordList from "./RecordList";
+import moment from "moment";
 
 const recordReducer = (currentRecords, action) => {
   switch (action.type) {
@@ -30,10 +32,17 @@ const Metrics = props => {
   const typedTextsLength = typedTexts.length;
   const textLength = text.length;
 
-  const word = 5;
-  const wordCount = typedTextsLength / word;
+  const [wpm, setWpm] = useState(0);
 
-  const wpm = secondsLapsed ? (wordCount / secondsLapsed) * 60 : 0;
+  //set wpm
+  useEffect(() => {
+    if (secondsLapsed) {
+      const word = 5;
+      const wordCount = typedTextsLength / word;
+      const wpm = (wordCount / secondsLapsed) * 60;
+      setWpm(wpm);
+    }
+  }, [secondsLapsed]);
 
   let accuracy = 0;
   if (JSON.stringify(text) === JSON.stringify(typedTexts)) {
@@ -97,9 +106,10 @@ const Metrics = props => {
     if (!isLoading && !error && reqIdentifer === "REMOVE_RECORD") {
       dispatch({ type: "DELETE", id: reqExtra });
     } else if (!isLoading && !error && reqIdentifer === "ADD_RECORD") {
+      const record = { id: data.name, ...reqExtra };
       dispatch({
         type: "ADD",
-        record: { id: data.username, ...reqExtra }
+        record
       });
     }
   }, [data, reqExtra, reqIdentifer, isLoading, error]);
@@ -118,16 +128,22 @@ const Metrics = props => {
   );
 
   useEffect(() => {
-    if (done) {
-      const record = { username, accuracy, completion, wpm, date: new Date() };
-      console.log('add record', record);
+    if (wpm) {
+      const record = {
+        username,
+        accuracy,
+        completion,
+        wpm,
+        date: moment().format("MMMM Do YYYY, h:mm:ss a")
+      };
+      console.log("add record", record);
       addRecordHandler(record);
     }
-  }, [done]);
+  }, [wpm]);
 
   const removeRecordHandler = useCallback(
     recordId => {
-      console.log('delete recordId', recordId)
+      console.log("delete recordId", recordId);
       sendRequest(
         `${baseUrl}/records/${recordId}.json`,
         "DELETE",

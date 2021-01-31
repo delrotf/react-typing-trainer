@@ -13,6 +13,7 @@ const RecordList = props => {
       <ul>
         {records.map(el => (
           <li key={el.id} onClick={onRemoveItem.bind(this, el.id)}>
+            <span>{el.date}</span>
             <span>{el.wpm?.toFixed(2)}</span>
             <span>{el.accuracy?.toFixed(2)}</span>
             <span>{el.completion?.toFixed(2)}x</span>

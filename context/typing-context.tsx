@@ -20,7 +20,7 @@ const TypingContextProvider = props => {
   const [typedTexts, setTypedTexts] = useState([]);
   const [secondsLapsed, setSecondsLapsed] = useState(0);
   const [done, setDone] = useState(false);
-  const [timerSecCount, setTimerSecCount] = useState(10)
+  const [timerSecCount, setTimerSecCount] = useState(5)
 
   return (
     <TypingContext.Provider
