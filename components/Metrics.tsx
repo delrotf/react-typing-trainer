@@ -77,7 +77,7 @@ const Metrics = props => {
 
   const addRecordHandler = useCallback(record => {
     sendRequest(
-      'https://react-hooks-update.firebaseio.com/records.json',
+      'https://react-typing-trainer-default-rtdb.firebaseio.com/records.json',
       'POST',
       JSON.stringify(record),
       record,
@@ -88,7 +88,7 @@ const Metrics = props => {
   const removeRecordHandler = useCallback(
     recordId => {
       sendRequest(
-        `https://react-hooks-update.firebaseio.com/records/${recordId}.json`,
+        `https://react-typing-trainer-default-rtdb.firebaseio.com/records/${recordId}.json`,
         'DELETE',
         null,
         recordId,
