@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { TypingContext } from "../context/typing-context";
 import { useEventListener } from "../hooks/useEventListener";
 import styled from 'styled-components'
+import { Button } from "react-bootstrap";
 
 const cursorColor = '#e2b714'
 
@@ -76,6 +77,9 @@ const TypeBox = props => {
           {textWithProps?.map((el, index) => (
               <StyledSpan current={el.current} className={el.className} key={index}>{el.text}</StyledSpan>
           ))}
+      </div>
+      <div>
+        <Button>Restart</Button>
       </div>
     </div>
   )
