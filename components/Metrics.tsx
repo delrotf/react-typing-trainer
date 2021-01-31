@@ -12,6 +12,9 @@ import useHttp from "../hooks/useHttp";
 import ErrorModal from "../ui/ErrorModal";
 import RecordList from "./RecordList";
 import moment from "moment";
+import { Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRedo } from "@fortawesome/free-solid-svg-icons";
 
 const recordReducer = (currentRecords, action) => {
   switch (action.type) {
@@ -27,44 +30,56 @@ const recordReducer = (currentRecords, action) => {
 };
 
 const Metrics = props => {
-  const { text, typedTexts, secondsLapsed, done } = useContext(TypingContext);
+  const {
+    text,
+    typedTexts,
+    secondsLapsed,
+    setSecondsLapsed,
+    done,
+    setDone,
+    setTypedTexts
+  } = useContext(TypingContext);
   const { username } = useContext(LoginContext);
   const typedTextsLength = typedTexts.length;
   const textLength = text.length;
 
   const [wpm, setWpm] = useState(0);
+  const [accuracy, setAccuracy] = useState(0);
+  const [completion, setCompletion] = useState(0);
 
   //set wpm
   useEffect(() => {
-    if (secondsLapsed) {
+    console.log("wpm", wpm);
+    if (secondsLapsed && typedTextsLength) {
       const word = 5;
       const wordCount = typedTextsLength / word;
       const wpm = (wordCount / secondsLapsed) * 60;
       setWpm(wpm);
+    }
+
+    let accuracy = 0;
+    if (JSON.stringify(text) === JSON.stringify(typedTexts)) {
+      accuracy = 100;
     } else {
-      setWpm(0);
-    }
-  }, [secondsLapsed]);
+      let correctCount = 0;
 
-  let accuracy = 0;
-  if (JSON.stringify(text) === JSON.stringify(typedTexts)) {
-    accuracy = 100;
-  } else {
-    let correctCount = 0;
+      typedTexts.forEach((el, index) => {
+        const textChar = text[index];
+        if (el === textChar) {
+          correctCount++;
+        }
+      });
 
-    typedTexts.forEach((el, index) => {
-      const textChar = text[index];
-      if (el === textChar) {
-        correctCount++;
+      if (correctCount) {
+        accuracy = (correctCount / typedTextsLength) * 100;
       }
-    });
-
-    if (correctCount) {
-      accuracy = (correctCount / typedTextsLength) * 100;
     }
-  }
 
-  const completion = (typedTextsLength / textLength) * 100;
+    setAccuracy(accuracy);
+
+    const completion = (typedTextsLength / textLength) * 100;
+    setCompletion(completion);
+  }, [secondsLapsed, typedTextsLength]);
 
   const baseUrl = "https://react-typing-trainer-default-rtdb.firebaseio.com";
 
@@ -166,6 +181,13 @@ const Metrics = props => {
     );
   }, [userRecords, removeRecordHandler]);
 
+  const onClickHandler = () => {
+    setTypedTexts([]);
+    setDone(false);
+    setSecondsLapsed(0);
+    setWpm(0);
+  };
+
   return (
     <div className="metrics">
       <div className="accuracy">
@@ -179,6 +201,11 @@ const Metrics = props => {
       <div className="wpm">
         <span className="label">wpm</span>
         <span className="value">{wpm.toFixed(2)}</span>
+      </div>
+      <div className="d-flex justify-content-center">
+        <Button variant="dark" onClick={onClickHandler}>
+          <FontAwesomeIcon icon={faRedo} />
+        </Button>
       </div>
       {recordList}
     </div>
