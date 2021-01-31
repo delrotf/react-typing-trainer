@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useTimer } from "react-timer-hook";
 import { TypingContext } from "../context/typing-context";
 
@@ -26,8 +26,8 @@ const Timer = ({ expiryTimestamp }) => {
     onExpire: onExpireHandler
   });
 
-  const startMin = useRef(0);
-  const startSec = useRef(0);
+  const [startMin] = useState(minutes);
+  const [startSec] = useState(seconds);
 
   useEffect(() => {
     if (!typedTextsLength || textLength === typedTextsLength) {
@@ -35,13 +35,11 @@ const Timer = ({ expiryTimestamp }) => {
 
       if (textLength === typedTextsLength) {
         setSecondsLapsed(
-          startMin.current * 60 + startSec.current - (minutes * 60 + seconds)
+          startMin * 60 + startSec - (minutes * 60 + seconds)
         );
       }
     } else if (!isRunning && typedTextsLength === 1) {
       restart(expiryTimestamp);
-      startMin.current = minutes;
-      startSec.current = seconds;
     }
   }, [typedTextsLength]);
 
@@ -54,10 +52,21 @@ const Timer = ({ expiryTimestamp }) => {
             <span />
             <span />
           </span>
-          {seconds.toString().split("").length === 1 && (
+          {!isRunning && startSec.toString().split("").length === 1 && (
             <span className="digit">0</span>
           )}
-          {seconds
+          {isRunning && seconds.toString().split("").length === 1 && (
+            <span className="digit">0</span>
+          )}
+          {!isRunning && startSec
+            .toString()
+            .split("")
+            .map((el, index) => (
+              <span key={index} className="digit">
+                {el}
+              </span>
+            ))}
+          {isRunning && seconds
             .toString()
             .split("")
             .map((el, index) => (

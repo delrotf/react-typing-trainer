@@ -4,6 +4,8 @@ import { TypingContext } from "../context/typing-context";
 import { useEventListener } from "../hooks/useEventListener";
 import styled from 'styled-components'
 import { Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRedo } from "@fortawesome/free-solid-svg-icons";
 
 const cursorColor = '#e2b714'
 
@@ -85,7 +87,7 @@ const TypeBox = props => {
         </div>
       </div>
       <div className='d-flex justify-content-center'>
-        <Button variant='primary' onClick={onClickHandler}>Restart</Button>
+        <Button variant='dark' onClick={onClickHandler}><FontAwesomeIcon icon={faRedo} /></Button>
       </div>
     </div>
   )
