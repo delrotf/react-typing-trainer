@@ -68,22 +68,25 @@ const Metrics = props => {
     clear
   } = useHttp();
 
+  // load data
   useEffect(() => {
-    const query = `?orderBy="username"&equalTo="${username}"`
+    const query = `?orderBy="username"&equalTo="${username}"`;
     sendRequest(`${baseUrl}/records.json${query}`, "GET", null, null, null);
   }, []);
 
   useEffect(() => {
     if (!isLoading && !error && data) {
       const loadedRecords = [];
+      console.log("data", data);
       for (const key in data) {
+        console.log("key", key);
         loadedRecords.push({
-          id: key,
+          id: key, //from firebase
           username: data[key].username,
           accuracy: data[key].accuracy,
           completion: data[key].completion,
           wpm: data[key].wpm,
-          date: data[key].date,
+          date: data[key].date
         });
       }
       dispatch({ type: "SET", records: loadedRecords });
@@ -116,12 +119,15 @@ const Metrics = props => {
 
   useEffect(() => {
     if (done) {
-      addRecordHandler({username, accuracy, completion, wpm, date: new Date()});
+      const record = { username, accuracy, completion, wpm, date: new Date() };
+      console.log('add record', record);
+      addRecordHandler(record);
     }
   }, [done]);
 
   const removeRecordHandler = useCallback(
     recordId => {
+      console.log('delete recordId', recordId)
       sendRequest(
         `${baseUrl}/records/${recordId}.json`,
         "DELETE",

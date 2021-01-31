@@ -16,7 +16,6 @@ const RecordList = props => {
             <span>{el.wpm?.toFixed(2)}</span>
             <span>{el.accuracy?.toFixed(2)}</span>
             <span>{el.completion?.toFixed(2)}x</span>
-            <span>{el.date}</span>
           </li>
         ))}
       </ul>
