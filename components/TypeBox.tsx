@@ -20,8 +20,8 @@ const StyledSpan = styled.span`
 const TypeBox = props => {
   const { typedTexts, setTypedTexts, text } = useContext(TypingContext)
 
-  const [textWithProps, setTextWithProps] = useState(text.map(el => ({ text: el, current: false, className: 'orig' })))
-
+  const chars = text.split('');
+  const [textWithProps, setTextWithProps] = useState(chars.map(el => ({ text: el, current: false, className: 'orig' })))
 
   const keyPressHandler = ({ key }) => {
     if (typedTexts.length < textWithProps.length) {
@@ -74,7 +74,7 @@ const TypeBox = props => {
     <div className='type-box'>
       <div className='type-container p-5 flex-wrap'>
           {textWithProps?.map((el, index) => (
-              <StyledSpan initial={typedTexts.length === 0 && index === 0} current={el.current} className={el.className} key={index}>{el.text}</StyledSpan>
+              <StyledSpan current={el.current} className={el.className} key={index}>{el.text}</StyledSpan>
           ))}
       </div>
     </div>
