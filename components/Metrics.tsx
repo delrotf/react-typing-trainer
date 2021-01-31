@@ -50,7 +50,6 @@ const Metrics = props => {
 
   //set wpm
   useEffect(() => {
-    console.log("wpm", wpm);
     if (secondsLapsed && typedTextsLength) {
       const word = 5;
       const wordCount = typedTextsLength / word;
