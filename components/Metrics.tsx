@@ -18,7 +18,7 @@ const recordReducer = (currentRecords, action) => {
     case "ADD":
       return [...currentRecords, action.record];
     case "DELETE":
-      return currentRecords.filter(ing => ing.id !== action.id);
+      return currentRecords.filter(el => el.id !== action.id);
     default:
       throw new Error("Should not get there!");
   }
