@@ -3,13 +3,15 @@ import React from "react";
 import "./RecordList.scss";
 
 const RecordList = props => {
-  const { onRemoveItem } = props;
+  const { records, onRemoveItem } = props;
+  
+  console.log('records', records)
 
   return (
     <section className="ingredient-list">
       <h2>Records</h2>
       <ul>
-        {props.records.map(el => (
+        {records.map(el => (
           <li key={el.id} onClick={onRemoveItem.bind(this, el.id)}>
             <span>{el.wpm}</span>
             <span>{el.accuracy}</span>

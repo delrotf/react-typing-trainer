@@ -75,15 +75,18 @@ const Metrics = props => {
 
   useEffect(() => {
     if (!isLoading && !error && data) {
-      const loadedIngredients = [];
+      const loadedRecords = [];
       for (const key in data) {
-        loadedIngredients.push({
+        loadedRecords.push({
           id: key,
-          title: data[key].title,
-          amount: data[key].amount
+          username: data[key].username,
+          accuracy: data[key].accuracy,
+          completion: data[key].completion,
+          wpm: data[key].wpm,
+          date: data[key].date,
         });
       }
-      dispatch({ type: "SET", records: loadedIngredients });
+      dispatch({ type: "SET", records: loadedRecords });
     }
   }, [data, isLoading, error]);
 
