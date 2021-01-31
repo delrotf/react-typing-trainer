@@ -41,6 +41,8 @@ const Metrics = props => {
       const wordCount = typedTextsLength / word;
       const wpm = (wordCount / secondsLapsed) * 60;
       setWpm(wpm);
+    } else {
+      setWpm(0);
     }
   }, [secondsLapsed]);
 
@@ -80,11 +82,17 @@ const Metrics = props => {
   // load data
   useEffect(() => {
     const query = `?orderBy="username"&equalTo="${username}"`;
-    sendRequest(`${baseUrl}/records.json${query}`, "GET", null, null, null);
+    sendRequest(
+      `${baseUrl}/records.json${query}`,
+      "GET",
+      null,
+      null,
+      "LOAD_RECORDS"
+    );
   }, []);
 
   useEffect(() => {
-    if (!isLoading && !error && data) {
+    if (!isLoading && !error && data && reqIdentifer === "LOAD_RECORDS") {
       const loadedRecords = [];
       console.log("data", data);
       for (const key in data) {
@@ -107,6 +115,8 @@ const Metrics = props => {
       dispatch({ type: "DELETE", id: reqExtra });
     } else if (!isLoading && !error && reqIdentifer === "ADD_RECORD") {
       const record = { id: data.name, ...reqExtra };
+      console.log("data,record", data, record);
+
       dispatch({
         type: "ADD",
         record
