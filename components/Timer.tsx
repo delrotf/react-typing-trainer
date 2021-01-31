@@ -3,15 +3,17 @@ import { useTimer } from "react-timer-hook";
 import { TypingContext } from "../context/typing-context";
 
 const Timer = ({ expiryTimestamp }) => {
-  const { typedTexts, setSecondsLapsed, done, setDone } = useContext(
-    TypingContext
-  );
+  const {
+    typedTexts,
+    setSecondsLapsed,
+    done,
+    setDone,
+    timerSecCount
+  } = useContext(TypingContext);
   const typedTextsLength = typedTexts.length;
 
   const onExpireHandler = () => {
-    console.log("expired");
     pause();
-    // setSecondsLapsed(startMin * 60 + startSec);
     setDone(true);
   };
 
@@ -32,18 +34,18 @@ const Timer = ({ expiryTimestamp }) => {
   const [startSec] = useState(seconds);
 
   useEffect(() => {
-    console.log("typedTextsLength", typedTextsLength);
     if (!typedTextsLength || done) {
-      pause();
-      console.log("paused");
+      if (isRunning) {
+        pause();
+      }
 
       if (done) {
-        console.log("done");
         setSecondsLapsed(startMin * 60 + startSec - (minutes * 60 + seconds));
       }
     } else if (!isRunning && typedTextsLength === 1) {
-      console.log("restart");
-      restart(expiryTimestamp);
+      const time = new Date();
+      time.setSeconds(time.getSeconds() + timerSecCount);
+      restart(time);
     }
   }, [done, typedTextsLength]);
 

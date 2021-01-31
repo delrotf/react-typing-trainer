@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { Metrics } from "../components/Metrics";
 import { Timer } from "../components/Timer";
 import { TypeBox } from "../components/TypeBox";
-import { TypingContextProvider } from "../context/typing-context";
+import { TypingContext } from "../context/typing-context";
 
 const TypingTrainer = props => {
+  const { timerSecCount } = useContext(TypingContext);
   const time = new Date();
-  time.setSeconds(time.getSeconds() + 10); // 10 minutes timer
+  time.setSeconds(time.getSeconds() + timerSecCount);
 
   return (
     <div className="typing-trainer p-5">
