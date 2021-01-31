@@ -53,6 +53,8 @@ const Metrics = props => {
 
   const completion = (typedTextsLength / textLength) * 100;
 
+  const baseUrl = "https://react-typing-trainer-default-rtdb.firebaseio.com";
+
   const [userRecords, dispatch] = useReducer(recordReducer, []);
   const {
     isLoading,
@@ -65,6 +67,27 @@ const Metrics = props => {
   } = useHttp();
 
   useEffect(() => {
+    sendRequest(
+      `${baseUrl}/records.json`,
+      "GET"
+    );
+  }, []);
+
+  useEffect(() => {
+    if (!isLoading && !error && data) {
+      const loadedIngredients = [];
+      for (const key in data) {
+        loadedIngredients.push({
+          id: key,
+          title: data[key].title,
+          amount: data[key].amount
+        });
+      }
+      dispatch({ type: "SET", records: loadedIngredients });
+    }
+  }, [data, isLoading, error]);
+
+  useEffect(() => {
     if (!isLoading && !error && reqIdentifer === "REMOVE_RECORD") {
       dispatch({ type: "DELETE", id: reqExtra });
     } else if (!isLoading && !error && reqIdentifer === "ADD_RECORD") {
@@ -74,12 +97,6 @@ const Metrics = props => {
       });
     }
   }, [data, reqExtra, reqIdentifer, isLoading, error]);
-
-  const filteredRecordsHandler = useCallback(filteredRecords => {
-    dispatch({ type: "SET", records: filteredRecords });
-  }, []);
-
-  const baseUrl = "https://react-typing-trainer-default-rtdb.firebaseio.com";
 
   const addRecordHandler = useCallback(
     record => {
