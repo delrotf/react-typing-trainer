@@ -46,10 +46,10 @@ const Metrics = props => {
   const [wpm, setWpm] = useState(0);
   const [accuracy, setAccuracy] = useState(0);
   const [completion, setCompletion] = useState(0);
-  const [record, setRecord] = useState(null);
 
   //set wpm
   useEffect(() => {
+    console.log("wpm", wpm);
     if (secondsLapsed && typedTextsLength) {
       const word = 5;
       const wordCount = typedTextsLength / word;
@@ -79,15 +79,6 @@ const Metrics = props => {
 
     const completion = (typedTextsLength / textLength) * 100;
     setCompletion(completion);
-
-    const record = {
-      username,
-      accuracy,
-      completion,
-      wpm,
-      date: moment().format("MMMM Do YYYY, h:mm:ss a")
-    };
-    setRecord(record);
   }, [secondsLapsed, typedTextsLength]);
 
   const baseUrl = "https://react-typing-trainer-default-rtdb.firebaseio.com";
@@ -159,10 +150,17 @@ const Metrics = props => {
   );
 
   useEffect(() => {
-    if (record) {
+    if (wpm) {
+      const record = {
+        username,
+        accuracy,
+        completion,
+        wpm,
+        date: moment().format("MMMM Do YYYY, h:mm:ss a")
+      };
       addRecordHandler(record);
     }
-  }, [record]);
+  }, [wpm]);
 
   const removeRecordHandler = useCallback(
     recordId => {
