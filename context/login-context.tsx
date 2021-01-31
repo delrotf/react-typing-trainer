@@ -11,9 +11,8 @@ export const LoginContext = React.createContext({
 });
 
 const LoginContextProvider = props => {
-  const [username, setFirstname] = useState();
-  // TODO get user from somewhere else
-  const [firstname, setUsername] = useState('user1');
+  const [username, setUsername] = useState('user1');
+  const [firstname, setFirstname] = useState();
   const [authenticated, setAuthenticated] = useState();
   return (
     <LoginContext.Provider

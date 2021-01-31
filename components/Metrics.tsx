@@ -70,7 +70,7 @@ const Metrics = props => {
 
   useEffect(() => {
     const query = `?orderBy="username"&equalTo="${username}"`
-    sendRequest(`${baseUrl}/records.json`, "GET", null, null, null);
+    sendRequest(`${baseUrl}/records.json${query}`, "GET", null, null, null);
   }, []);
 
   useEffect(() => {
@@ -96,7 +96,7 @@ const Metrics = props => {
     } else if (!isLoading && !error && reqIdentifer === "ADD_RECORD") {
       dispatch({
         type: "ADD",
-        record: { id: data.name, ...reqExtra }
+        record: { id: data.username, ...reqExtra }
       });
     }
   }, [data, reqExtra, reqIdentifer, isLoading, error]);
@@ -116,7 +116,7 @@ const Metrics = props => {
 
   useEffect(() => {
     if (done) {
-      addRecordHandler({username: 'user1', accuracy, completion, wpm, date: new Date()});
+      addRecordHandler({username, accuracy, completion, wpm, date: new Date()});
     }
   }, [done]);
 
