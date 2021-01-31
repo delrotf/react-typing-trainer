@@ -5,6 +5,7 @@ import React, {
   useMemo,
   useReducer
 } from "react";
+import { LoginContext } from "../context";
 import { TypingContext } from "../context/typing-context";
 import useHttp from "../hooks/useHttp";
 import ErrorModal from "../ui/ErrorModal";
@@ -25,6 +26,7 @@ const recordReducer = (currentRecords, action) => {
 
 const Metrics = props => {
   const { text, typedTexts, secondsLapsed, done } = useContext(TypingContext);
+  const { username } = useContext(LoginContext);
   const typedTextsLength = typedTexts.length;
   const textLength = text.length;
 
@@ -67,6 +69,7 @@ const Metrics = props => {
   } = useHttp();
 
   useEffect(() => {
+    const query = `?orderBy="username"&equalTo="${username}"`
     sendRequest(`${baseUrl}/records.json`, "GET", null, null, null);
   }, []);
 

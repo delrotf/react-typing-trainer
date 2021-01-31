@@ -9,10 +9,11 @@ const RecordList = props => {
     <section className="ingredient-list">
       <h2>Records</h2>
       <ul>
-        {props.records.map(ig => (
-          <li key={ig.id} onClick={onRemoveItem.bind(this, ig.id)}>
-            <span>{ig.title}</span>
-            <span>{ig.amount}x</span>
+        {props.records.map(el => (
+          <li key={el.id} onClick={onRemoveItem.bind(this, el.id)}>
+            <span>{el.wpm}</span>
+            <span>{el.accuracy}</span>
+            <span>{el.completion}x</span>
           </li>
         ))}
       </ul>
