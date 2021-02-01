@@ -207,8 +207,8 @@ const Metrics = props => {
 
   const graphDisplay =
     lineGraphData.length > 1 ? (
-      <div>
-        <div className="text-center text-muted">
+      <React.Fragment>
+        <div className="text-center primary">
           {graphValue !== null
             ? graphValue.toFixed(0)
             : "Hover on graph to see the value here."}
@@ -221,10 +221,10 @@ const Metrics = props => {
           gridY
           gridX
         />
-      </div>
+      </React.Fragment>
     ) : (
-      <div className="d-flex justify-content-center align-items-center h-100">
-        <span>Play more to see graph form here.</span>
+      <div className="d-flex justify-content-center align-items-center h-100 accent">
+        <span>Play some more to see graph forms here.</span>
       </div>
     );
 
