@@ -18,13 +18,11 @@ export const TypingContext = React.createContext({
 });
 
 const TypingContextProvider = props => {
-  const [text, setText] = useState(
-    "The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog "
-  );
+  const [text, setText] = useState();
   const [typedTexts, setTypedTexts] = useState([]);
   const [secondsLapsed, setSecondsLapsed] = useState(0);
   const [done, setDone] = useState(false);
-  const [timerSecCount, setTimerSecCount] = useState(1);
+  const [timerSecCount, setTimerSecCount] = useState(180);
   const [reset, setReset] = useState(0);
   const [arrayOfTexts, setArrayOfTexts] = useState([]);
 
