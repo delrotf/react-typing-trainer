@@ -46,7 +46,7 @@ const Metrics = props => {
   } = useContext(TypingContext);
   const { username } = useContext(LoginContext);
   const typedTextsLength = typedTexts.length;
-  const textLength = text.length;
+  const textLength = text?.length;
 
   const [wpm, setWpm] = useState(0);
   const [accuracy, setAccuracy] = useState(0);
@@ -54,7 +54,6 @@ const Metrics = props => {
 
   //set wpm
   useEffect(() => {
-    console.log("wpm", wpm);
     if (secondsLapsed && typedTextsLength) {
       const word = 5;
       const wordCount = typedTextsLength / word;

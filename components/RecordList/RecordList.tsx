@@ -4,8 +4,6 @@ import "./RecordList.scss";
 
 const RecordList = props => {
   const { records, onRemoveItem } = props;
-  
-  console.log('records', records)
 
   return (
     <section className="record-list">

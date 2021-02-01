@@ -38,13 +38,10 @@ const TypeBox = props => {
   } = useHttp();
 
   useEffect(() => {
-    console.log('reset', reset)
     setReset(prev => prev++)
   }, [])
 
   useEffect(() => {
-    console.log('went here')
-
     if (arrayOfTexts && arrayOfTexts.length) {
       setText(arrayOfTexts.pop())
     } else {
@@ -60,13 +57,12 @@ const TypeBox = props => {
 
   // load data
   useEffect(() => {
-    console.log('here as well', data)
     if (!isLoading && !error && data) {
       setArrayOfTexts(data);
     } else if (isLoading) {
       setText('Loading awesome text. Please wait.')
     } else if (error) {
-      console.log('error', error)
+      console.error('error', error)
     }
   }, [data, isLoading, error]);
 
@@ -77,7 +73,7 @@ const TypeBox = props => {
   }, [arrayOfTexts])
 
   useEffect(() => {
-    setTextWithProps(text.split('').map(el => ({ text: el, current: false, className: 'orig' })))
+    setTextWithProps(text?.split('').map(el => ({ text: el, current: false, className: 'orig' })))
   }, [text])
 
   const keyPressHandler = ({ key }) => {

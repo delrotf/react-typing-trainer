@@ -18,7 +18,7 @@ export const TypingContext = React.createContext({
 });
 
 const TypingContextProvider = props => {
-  const [text, setText] = useState();
+  const [text, setText] = useState(null);
   const [typedTexts, setTypedTexts] = useState([]);
   const [secondsLapsed, setSecondsLapsed] = useState(0);
   const [done, setDone] = useState(false);

@@ -53,7 +53,6 @@ const useHttp = () => {
           return response.json();
         })
         .then(responseData => {
-          console.log('responseData', responseData)
           dispatchHttp({
             type: 'RESPONSE',
             responseData: responseData,
@@ -61,7 +60,7 @@ const useHttp = () => {
           });
         })
         .catch(error => {
-          console.log('error', error)
+          console.error('error', error)
           dispatchHttp({
             type: 'ERROR',
             errorMessage: 'Something went wrong!'
