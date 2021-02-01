@@ -15,8 +15,9 @@ const RecordList = props => {
           <li key={el.id} onClick={onRemoveItem.bind(this, el.id)}>
             <span>{el.date}</span>
             <span>{el.wpm?.toFixed(0)}</span>
-            <span>{el.accuracy?.toFixed(0)}</span>
-            <span>{el.completion?.toFixed(0)}x</span>
+            <span>{el.accuracy?.toFixed(0)}%</span>
+            <span>{el.completion?.toFixed(0)}%</span>
+            <span className="ml-3">x</span>
           </li>
         ))}
       </ul>
