@@ -68,7 +68,7 @@ const TypeBox = props => {
 
   useEffect(() => {
     if (arrayOfTexts && arrayOfTexts.length) {
-      setText(arrayOfTexts.pop())
+      setText(arrayOfTexts.pop().trim())
     }
   }, [arrayOfTexts])
 
