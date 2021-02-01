@@ -178,7 +178,6 @@ const Metrics = props => {
   );
 
   const lineGraphData = userRecords.map(el => {
-    console.log("graph", el);
     return el.wpm;
   });
 
@@ -201,10 +200,33 @@ const Metrics = props => {
     buttonRef.current.blur();
   };
 
-  const [graphValue, setGraphValue] = useState(0);
+  const [graphValue, setGraphValue] = useState(null);
   const onGraphHover = value => {
     setGraphValue(value[1]);
   };
+
+  const graphDisplay =
+    lineGraphData.length > 1 ? (
+      <div>
+        <div className="text-center text-muted">
+          {graphValue !== null
+            ? graphValue.toFixed(0)
+            : "Hover on graph to see the value here."}
+        </div>
+        <LineGraph
+          data={lineGraphData}
+          hover
+          onHover={onGraphHover}
+          accent="#e2b714"
+          gridY
+          gridX
+        />
+      </div>
+    ) : (
+      <div className="d-flex justify-content-center align-items-center h-100">
+        <span>Play more to see graph form here.</span>
+      </div>
+    );
 
   return (
     <div className="metrics p-5">
@@ -223,19 +245,9 @@ const Metrics = props => {
             <span className="value">{completion.toFixed(0)}%</span>
           </div>
         </div>
-        <div className="graph-container">
-          <div className="text-center text-muted">{graphValue.toFixed(0)}</div>
-          <LineGraph
-            data={lineGraphData}
-            hover
-            onHover={onGraphHover}
-            accent="#e2b714"
-            gridY
-            gridX
-          />
-        </div>
+        <div className="graph-container">{graphDisplay}</div>
       </div>
-      <div className="d-flex justify-content-center p-5">
+      <div className="d-flex justify-content-center pt-5">
         <Button
           ref={buttonRef}
           variant="dark"
