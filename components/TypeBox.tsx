@@ -74,7 +74,7 @@ const TypeBox = props => {
     })
 
     setTextWithProps([...textWithProps])
-  }, [textWithProps, typedTexts])
+  }, [typedTexts])
 
   useEventListener("keypress", keyPressHandler);
   useEventListener("keydown", keyDownHandler);
