@@ -201,7 +201,7 @@ const Metrics = props => {
     buttonRef.current.blur();
   };
 
-  const [graphValue, setGraphValue] = useState();
+  const [graphValue, setGraphValue] = useState(0);
   const onGraphHover = value => {
     setGraphValue(value[1]);
   };
@@ -212,19 +212,19 @@ const Metrics = props => {
         <div className="m-3">
           <div className="stat">
             <span className="label">wpm</span>
-            <span className="value">{wpm.toFixed(2)}</span>
+            <span className="value">{wpm.toFixed(0)}</span>
           </div>
           <div className="stat">
             <span className="label">Accuracy</span>
-            <span className="value">{accuracy.toFixed(2)}</span>
+            <span className="value">{accuracy.toFixed(2)}%</span>
           </div>
           <div className="stat">
             <span className="label">Completion</span>
-            <span className="value">{completion.toFixed(2)}</span>
+            <span className="value">{completion.toFixed(2)}%</span>
           </div>
         </div>
         <div className="graph-container">
-          <div className="text-center text-muted">{graphValue}</div>
+          <div className="text-center text-muted">{graphValue.toFixed(0)}</div>
           <LineGraph
             data={lineGraphData}
             hover
