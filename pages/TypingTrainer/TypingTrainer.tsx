@@ -23,7 +23,7 @@ const TypingTrainer = props => {
   return (
     <div className="typing-trainer">
       <div>
-        <div className="accent py-3">Hello, {username}</div>
+        <div className="accent py-3">Hello, {username}!</div>
         <div className="d-flex justify-content-center p-5">
           <div>
             <Timer expiryTimestamp={time} />
