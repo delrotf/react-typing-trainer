@@ -34,6 +34,7 @@ const recordReducer = (currentRecords, action) => {
 const Metrics = props => {
   const {
     text,
+    setText,
     typedTexts,
     secondsLapsed,
     setSecondsLapsed,
@@ -192,6 +193,7 @@ const Metrics = props => {
     setDone(false);
     setSecondsLapsed(0);
     setWpm(0);
+    setText('seconde tet');
   };
 
   const buttonRef = useRef();

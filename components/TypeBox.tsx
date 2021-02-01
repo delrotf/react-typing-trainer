@@ -23,10 +23,14 @@ const StyledSpan = styled.span`
 const TypeBox = props => {
   const { typedTexts, setTypedTexts, text, setSecondsLapsed, done, setDone } = useContext(TypingContext)
 
-  const [textWithProps, setTextWithProps] = useState(text.split('').map(el => ({ text: el, current: false, className: 'orig' })))
+  const [textWithProps, setTextWithProps] = useState([])
+
+  useEffect(() => {
+    setTextWithProps(text.split('').map(el => ({ text: el, current: false, className: 'orig' })))
+  }, [])
 
   const keyPressHandler = ({ key }) => {
-    if (!done && typedTexts.length <                    textWithProps.length) {
+    if (!done && typedTexts.length < textWithProps.length) {
       setTypedTexts([...typedTexts, key])
     } else {
       setDone(true)
@@ -42,7 +46,7 @@ const TypeBox = props => {
 
   //set letters class whether correct or wrong
   useEffect(() => {
-    textWithProps.forEach((el, index) => {
+    textWithProps?.forEach((el, index) => {
       if (typedTexts.length === index) {
         el.current = true;
       } else {
@@ -70,7 +74,7 @@ const TypeBox = props => {
     })
 
     setTextWithProps([...textWithProps])
-  }, [typedTexts])
+  }, [textWithProps, typedTexts])
 
   useEventListener("keypress", keyPressHandler);
   useEventListener("keydown", keyDownHandler);
