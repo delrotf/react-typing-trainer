@@ -22,7 +22,7 @@ const StyledSpan = styled.span`
 `
 
 const TypeBox = props => {
-  const { typedTexts, setTypedTexts, text, setText, setSecondsLapsed, done, setDone, reset, setReset } = useContext(TypingContext)
+  const { typedTexts, setTypedTexts, text, setText, arrayOfTexts, setArrayOfTexts, setSecondsLapsed, done, setDone, reset, setReset } = useContext(TypingContext)
 
   const [textWithProps, setTextWithProps] = useState([])
 
@@ -41,27 +41,37 @@ const TypeBox = props => {
     setReset(prev => prev++)
   }, [])
 
-  const baseUrl = 'https://baconipsum.com/api/?type=meat-and-filler'
-  // load data
   useEffect(() => {
     console.log('went here')
-    sendRequest(
-      'https://baconipsum.com/api/?type=meat-and-filler',
-      "GET",
-      null,
-      null,
-      null
-    );
+
+    if (arrayOfTexts && arrayOfTexts.length) {
+      setText(arrayOfTexts.pop())
+    } else {
+      sendRequest(
+        'https://baconipsum.com/api/?type=meat-and-filler',
+        "GET",
+        null,
+        null,
+        null
+      );
+    }
   }, [reset]);
 
+  // load data
   useEffect(() => {
     console.log('here as well', data)
     if (!isLoading && !error && data) {
-      setText(data[0]);
+      setArrayOfTexts(data);
     } else if (error) {
       console.log('error', error)
     }
   }, [data, isLoading, error]);
+
+  useEffect(() => {
+    if (arrayOfTexts && arrayOfTexts.length) {
+      setText(arrayOfTexts.pop())
+    }
+  }, [arrayOfTexts])
 
   useEffect(() => {
     setTextWithProps(text.split('').map(el => ({ text: el, current: false, className: 'orig' })))

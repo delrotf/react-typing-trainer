@@ -194,7 +194,7 @@ const Metrics = props => {
     setDone(false);
     setSecondsLapsed(0);
     setWpm(0);
-    setReset((prev) => prev++)
+    setReset(prev => ++prev);
   };
 
   const buttonRef = useRef();

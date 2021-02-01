@@ -3,6 +3,8 @@ import React, { useRef, useState } from "react";
 export const TypingContext = React.createContext({
   text: null,
   setText: null,
+  arrayOfTexts: null,
+  setArrayOfTexts: null,
   typedTexts: null,
   setTypedTexts: null,
   secondsLapsed: null,
@@ -24,12 +26,15 @@ const TypingContextProvider = props => {
   const [done, setDone] = useState(false);
   const [timerSecCount, setTimerSecCount] = useState(1);
   const [reset, setReset] = useState(0);
+  const [arrayOfTexts, setArrayOfTexts] = useState([]);
 
   return (
     <TypingContext.Provider
       value={{
         text,
         setText,
+        arrayOfTexts,
+        setArrayOfTexts,
         typedTexts,
         setTypedTexts,
         secondsLapsed,
