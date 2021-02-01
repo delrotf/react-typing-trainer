@@ -9,31 +9,23 @@ import {
 } from "../../context/login-context";
 
 const LoginForm = props => {
-  const { setFirstname, setAuthenticated } = useContext(LoginContext);
+  const { setUsername, setAuthenticated } = useContext(LoginContext);
 
   const formValues = {
-    firstname: "",
-    lastname: "",
-    email: "",
-    password: ""
+    username: ""
   };
 
   const validationSchema = Yup.object({
-    firstname: Yup.string().required("This field is required."),
-    lastname: Yup.string().required("This field is required."),
-    email: Yup.string()
+    username: Yup.string()
       .required("This field is required.")
-      .email("Invalid format."),
-    password: Yup.string()
-      .required("This field is required.")
-      .min(8, "At least ${min} characters.")
+      .min(4, "At least ${min} characters.")
   });
 
   const onSubmit = values => {
     console.log("values", values);
-    setFirstname(values.firstname);
+    setUsername(values.username);
     setAuthenticated(true);
-    props.history.push("/home");
+    props.history.push("/typing-trainer");
   };
 
   return (
@@ -48,45 +40,18 @@ const LoginForm = props => {
             <div className="p-3">
               <BsForm.Row>
                 <Input
-                  controlId="firstname"
-                  name="firstname"
+                  controlId="username"
+                  name="username"
                   type="text"
-                  label="Firstname"
-                  hint="firstname"
-                  placeholder="Firstname"
-                />
-                <Input
-                  controlId="lastname"
-                  name="lastname"
-                  type="text"
-                  label="Lastname"
-                  hint="Lastname"
-                  placeholder="Lastname"
-                />
-              </BsForm.Row>
-              <BsForm.Row>
-                <Input
-                  controlId="email"
-                  name="email"
-                  type="email"
-                  label="Email"
-                  hint="email"
-                  placeholder="Email"
-                />
-                <Input
-                  controlId="password"
-                  name="password"
-                  type="password"
-                  label="Password"
-                  hint="password"
-                  placeholder="Password"
+                  label="Username"
+                  hint="Can be any username"
                 />
               </BsForm.Row>
             </div>
             <hr />
             <div className="d-flex p-3">
               <Button variant="primary" className="flex-fill" type="submit">
-                Create
+                Let me in.
               </Button>
             </div>
           </Form>
