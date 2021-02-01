@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRedo } from "@fortawesome/free-solid-svg-icons";
+import useHttp from "../hooks/useHttp";
 
 const cursorColor = '#e2b714'
 
@@ -21,13 +22,50 @@ const StyledSpan = styled.span`
 `
 
 const TypeBox = props => {
-  const { typedTexts, setTypedTexts, text, setSecondsLapsed, done, setDone } = useContext(TypingContext)
+  const { typedTexts, setTypedTexts, text, setText, setSecondsLapsed, done, setDone, reset, setReset } = useContext(TypingContext)
 
   const [textWithProps, setTextWithProps] = useState([])
 
+  const {
+    isLoading,
+    error,
+    data,
+    sendRequest,
+    reqExtra,
+    reqIdentifer,
+    clear
+  } = useHttp();
+
+  useEffect(() => {
+    console.log('reset', reset)
+    setReset(prev => prev++)
+  }, [])
+
+  const baseUrl = 'https://baconipsum.com/api/?type=meat-and-filler'
+  // load data
+  useEffect(() => {
+    console.log('went here')
+    sendRequest(
+      'https://baconipsum.com/api/?type=meat-and-filler',
+      "GET",
+      null,
+      null,
+      null
+    );
+  }, [reset]);
+
+  useEffect(() => {
+    console.log('here as well', data)
+    if (!isLoading && !error && data) {
+      setText(data[0]);
+    } else if (error) {
+      console.log('error', error)
+    }
+  }, [data, isLoading, error]);
+
   useEffect(() => {
     setTextWithProps(text.split('').map(el => ({ text: el, current: false, className: 'orig' })))
-  }, [])
+  }, [text])
 
   const keyPressHandler = ({ key }) => {
     if (!done && typedTexts.length < textWithProps.length) {

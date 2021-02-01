@@ -40,7 +40,8 @@ const Metrics = props => {
     setSecondsLapsed,
     done,
     setDone,
-    setTypedTexts
+    setTypedTexts,
+    setReset
   } = useContext(TypingContext);
   const { username } = useContext(LoginContext);
   const typedTextsLength = typedTexts.length;
@@ -193,7 +194,7 @@ const Metrics = props => {
     setDone(false);
     setSecondsLapsed(0);
     setWpm(0);
-    setText('seconde tet');
+    setReset((prev) => prev++)
   };
 
   const buttonRef = useRef();
