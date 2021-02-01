@@ -216,11 +216,11 @@ const Metrics = props => {
           </div>
           <div className="stat">
             <span className="label">Accuracy</span>
-            <span className="value">{accuracy.toFixed(2)}%</span>
+            <span className="value">{accuracy.toFixed(0)}%</span>
           </div>
           <div className="stat">
             <span className="label">Completion</span>
-            <span className="value">{completion.toFixed(2)}%</span>
+            <span className="value">{completion.toFixed(0)}%</span>
           </div>
         </div>
         <div className="graph-container">
