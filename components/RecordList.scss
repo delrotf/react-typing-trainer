@@ -3,13 +3,16 @@
   max-width: 80%;
   margin: auto;
   h2 {
-    border-bottom: 3px solid #ccc;
+    color: gray;
+    border-bottom: 3px solid gray;
     padding-bottom: 1rem;
   }
   ul {
     list-style: none;
     margin: 0;
     padding: 0;
+    max-height: 350px;
+    overflow: auto;
   }
   li {
     color: #e2b714;

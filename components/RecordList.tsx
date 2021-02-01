@@ -8,7 +8,7 @@ const RecordList = props => {
   console.log('records', records)
 
   return (
-    <section className="ingredient-list">
+    <section className="record-list">
       <h2>Records</h2>
       <ul>
         {records.map(el => (

@@ -15,11 +15,22 @@ import moment from "moment";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRedo } from "@fortawesome/free-solid-svg-icons";
+import LineGraph from "react-line-graph";
+
+const recordReducer = (currentRecords, action) => {
+  switch (action.type) {
+    case "SET":
+      return action.records;
+    case "ADD":
+      return [...currentRecords, action.record];
+    case "DELETE":
+      return currentRecords.filter(el => el.id !== action.id);
+    default:
+      throw new Error("Should not get there!");
+  }
+};
 
 const Metrics = props => {
-  const { recordReducer } = props;
-  
-
   const {
     text,
     typedTexts,
@@ -85,33 +96,33 @@ const Metrics = props => {
   } = useHttp();
 
   // load data
-  // useEffect(() => {
-  //   const query = `?orderBy="username"&equalTo="${username}"`;
-  //   sendRequest(
-  //     `${baseUrl}/records.json${query}`,
-  //     "GET",
-  //     null,
-  //     null,
-  //     "LOAD_RECORDS"
-  //   );
-  // }, []);
+  useEffect(() => {
+    const query = `?orderBy="username"&equalTo="${username}"`;
+    sendRequest(
+      `${baseUrl}/records.json${query}`,
+      "GET",
+      null,
+      null,
+      "LOAD_RECORDS"
+    );
+  }, []);
 
-  // useEffect(() => {
-  //   if (!isLoading && !error && data && reqIdentifer === "LOAD_RECORDS") {
-  //     const loadedRecords = [];
-  //     for (const key in data) {
-  //       loadedRecords.push({
-  //         id: key, //from firebase
-  //         username: data[key].username,
-  //         accuracy: data[key].accuracy,
-  //         completion: data[key].completion,
-  //         wpm: data[key].wpm,
-  //         date: data[key].date
-  //       });
-  //     }
-  //     dispatch({ type: "SET", records: loadedRecords });
-  //   }
-  // }, [data, isLoading, error]);
+  useEffect(() => {
+    if (!isLoading && !error && data && reqIdentifer === "LOAD_RECORDS") {
+      const loadedRecords = [];
+      for (const key in data) {
+        loadedRecords.push({
+          id: key, //from firebase
+          username: data[key].username,
+          accuracy: data[key].accuracy,
+          completion: data[key].completion,
+          wpm: data[key].wpm,
+          date: data[key].date
+        });
+      }
+      dispatch({ type: "SET", records: loadedRecords });
+    }
+  }, [data, isLoading, error]);
 
   useEffect(() => {
     if (!isLoading && !error && reqIdentifer === "REMOVE_RECORD") {
@@ -165,6 +176,8 @@ const Metrics = props => {
     [sendRequest]
   );
 
+  const lineGraphData = userRecords.map(el => el.wpm);
+
   const recordList = useMemo(() => {
     return (
       <RecordList records={userRecords} onRemoveItem={removeRecordHandler} />
@@ -179,18 +192,23 @@ const Metrics = props => {
   };
 
   return (
-    <div className="metrics">
-      <div className="accuracy">
-        <span className="label">Accuracy</span>
-        <span className="value">{accuracy.toFixed(2)}</span>
-      </div>
-      <div className="completion">
-        <span className="label">Completion</span>
-        <span className="value">{completion.toFixed(2)}</span>
-      </div>
-      <div className="wpm">
-        <span className="label">wpm</span>
-        <span className="value">{wpm.toFixed(2)}</span>
+    <div className="metrics p-5">
+      <div className="d-flex">
+        <div>
+          <div className="accuracy">
+            <span className="label">Accuracy</span>
+            <span className="value">{accuracy.toFixed(2)}</span>
+          </div>
+          <div className="completion">
+            <span className="label">Completion</span>
+            <span className="value">{completion.toFixed(2)}</span>
+          </div>
+          <div className="wpm">
+            <span className="label">wpm</span>
+            <span className="value">{wpm.toFixed(2)}</span>
+          </div>
+        </div>
+          <LineGraph data={lineGraphData} />
       </div>
       <div className="d-flex justify-content-center">
         <Button variant="dark" onClick={onClickHandler}>

@@ -24,7 +24,7 @@ body {
   justify-content: center;
 
   > div {
-    max-width: 900px;
+    max-width: 992px;
   }
 
   .timer {
@@ -106,6 +106,8 @@ body {
   }
 
   .metrics {
+    width: 100%;
+
     .label {
       color: gray;
     }
