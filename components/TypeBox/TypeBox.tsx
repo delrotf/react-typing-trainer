@@ -78,7 +78,7 @@ const TypeBox = props => {
 
   const keyPressHandler = ({ key }) => {
     if (!isLoading && !error) {
-      if (!done && typedTexts.length < textWithProps.length) {
+      if (!done && typedTexts.length < textWithProps.length-1) {
         setTypedTexts([...typedTexts, key])
       } else {
         setDone(true)
