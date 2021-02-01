@@ -108,12 +108,20 @@ body {
   .metrics {
     width: 100%;
 
+    .stat {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
     .label {
       color: gray;
     }
 
     .value {
       color: #e2b714;
+      font-size: 35px;
     }
   }
 

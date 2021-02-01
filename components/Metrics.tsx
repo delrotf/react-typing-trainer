@@ -194,21 +194,21 @@ const Metrics = props => {
   return (
     <div className="metrics p-5">
       <div className="d-flex">
-        <div>
-          <div className="accuracy">
-            <span className="label">Accuracy</span>
-            <span className="value">{accuracy.toFixed(2)}</span>
-          </div>
-          <div className="completion">
-            <span className="label">Completion</span>
-            <span className="value">{completion.toFixed(2)}</span>
-          </div>
-          <div className="wpm">
+        <div className="m-3">
+          <div className="stat">
             <span className="label">wpm</span>
             <span className="value">{wpm.toFixed(2)}</span>
           </div>
+          <div className="stat">
+            <span className="label">Accuracy</span>
+            <span className="value">{accuracy.toFixed(2)}</span>
+          </div>
+          <div className="stat">
+            <span className="label">Completion</span>
+            <span className="value">{completion.toFixed(2)}</span>
+          </div>
         </div>
-          <LineGraph data={lineGraphData} />
+        <LineGraph data={lineGraphData} />
       </div>
       <div className="d-flex justify-content-center">
         <Button variant="dark" onClick={onClickHandler}>

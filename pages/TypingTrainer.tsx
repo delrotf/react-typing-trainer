@@ -16,7 +16,7 @@ const TypingTrainer = props => {
       <div>
         <Timer expiryTimestamp={time} />
         <TypeBox />
-        <div className={!secondsLapsed ? 'hidden' : 'ontop'}>
+        <div className={secondsLapsed ? 'hidden' : 'ontop'}>
           <Metrics />
         </div>
       </div>
