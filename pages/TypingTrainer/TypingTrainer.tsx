@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useReducer, useState } from "react";
-import { Metrics } from "../components/Metrics";
-import { Timer } from "../components/Timer";
-import { TypeBox } from "../components/TypeBox";
-import { TypingContext } from "../context/typing-context";
+import { Metrics } from "../../components/Metrics/Metrics";
+import { Timer } from "../../components/Timer/Timer";
+import { TypeBox } from "../../components/TypeBox/TypeBox";
+import { TypingContext } from "../../context/typing-context";
 import './TypingTrainer.scss'
 
 const TypingTrainer = props => {

@@ -3,8 +3,8 @@ import { LoginPage } from "./pages";
 import { Route } from "react-router-dom";
 import { HomePage } from "./pages/HomePage";
 import { LoginContextProvider } from "./context";
-import { TypingTrainer } from "./pages/TypingTrainer";
 import { TypingContextProvider } from "./context/typing-context";
+import { TypingTrainer } from "./pages/TypingTrainer/TypingTrainer";
 
 const Main = props => {
   return (

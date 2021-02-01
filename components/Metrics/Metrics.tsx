@@ -7,16 +7,17 @@ import React, {
   useRef,
   useState
 } from "react";
-import { LoginContext } from "../context";
-import { TypingContext } from "../context/typing-context";
-import useHttp from "../hooks/useHttp";
-import ErrorModal from "../ui/ErrorModal";
-import RecordList from "./RecordList";
+import { LoginContext } from "../../context";
+import { TypingContext } from "../../context/typing-context";
+import useHttp from "../../hooks/useHttp";
+import ErrorModal from "../../ui/ErrorModal";
 import moment from "moment";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRedo } from "@fortawesome/free-solid-svg-icons";
 import LineGraph from "react-line-graph";
+import RecordList from "../RecordList/RecordList";
+import "./Metrics.scss";
 
 const recordReducer = (currentRecords, action) => {
   switch (action.type) {

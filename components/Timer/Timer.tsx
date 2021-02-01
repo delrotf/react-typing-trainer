@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useTimer } from "react-timer-hook";
-import { TypingContext } from "../context/typing-context";
+import { TypingContext } from "../../context/typing-context";
+import './Timer.scss'
 
 const Timer = ({ expiryTimestamp }) => {
   const {

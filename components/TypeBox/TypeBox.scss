@@ -1,0 +1,32 @@
+  .type-box {
+    .type-container {
+      display: flex;
+      justify-content: center;
+      .type-input {
+        display: inline-flex;
+        align-items: flex-end;
+        line-height: 1.5rem;
+        font-size: 1.5rem;
+
+        .correct {
+          color: white;
+        }
+        .correct-space {
+          background-color: unset;
+        }
+        .wrong {
+          color: #ca4754;
+        }
+        .wrong-space {
+          background-color: #ca4754;
+        }
+        .orig {
+          color: gray;
+        }
+      }
+    }
+
+    button {
+      color: #e2b714;
+    }
+  }

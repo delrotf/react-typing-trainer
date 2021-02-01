@@ -1,0 +1,39 @@
+.hidden {
+  position: absolute;
+  top: -1000px;
+}
+
+.ontop {
+  position: absolute;
+  background-color: #323437;
+  top: 0;
+  width: 990px;
+}
+
+.typing-trainer {
+  display: flex;
+  justify-content: center;
+
+  .accent {
+    color: #e2b714
+  }
+
+  .primary {
+    color: gray
+  }
+
+  > div {
+    max-width: 992px;
+  }
+
+
+
+
+
+
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+  }
+}

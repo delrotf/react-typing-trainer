@@ -1,12 +1,13 @@
 
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { TypingContext } from "../context/typing-context";
-import { useEventListener } from "../hooks/useEventListener";
+import { TypingContext } from "../../context/typing-context";
+import { useEventListener } from "../../hooks/useEventListener";
 import styled from 'styled-components'
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRedo } from "@fortawesome/free-solid-svg-icons";
-import useHttp from "../hooks/useHttp";
+import useHttp from "../../hooks/useHttp";
+import './TypeBox.scss';
 
 const cursorColor = '#e2b714'
 
