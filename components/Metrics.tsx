@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useMemo,
   useReducer,
+  useRef,
   useState
 } from "react";
 import { LoginContext } from "../context";
@@ -176,7 +177,10 @@ const Metrics = props => {
     [sendRequest]
   );
 
-  const lineGraphData = userRecords.map(el => el.wpm);
+  const lineGraphData = userRecords.map(el => {
+    console.log("graph", el);
+    return el.wpm;
+  });
 
   const recordList = useMemo(() => {
     return (
@@ -189,6 +193,11 @@ const Metrics = props => {
     setDone(false);
     setSecondsLapsed(0);
     setWpm(0);
+  };
+
+  const [graphValue, setGraphValue] = useState();
+  const onGraphHover = value => {
+    setGraphValue(value[1]);
   };
 
   return (
@@ -208,7 +217,10 @@ const Metrics = props => {
             <span className="value">{completion.toFixed(2)}</span>
           </div>
         </div>
-        <LineGraph data={lineGraphData} />
+        <div className="w-100">
+          <div className="text-center text-muted">{graphValue}</div>
+          <LineGraph data={lineGraphData} hover onHover={onGraphHover} accent='#e2b714'/>
+        </div>
       </div>
       <div className="d-flex justify-content-center">
         <Button variant="dark" onClick={onClickHandler}>
