@@ -73,7 +73,7 @@ const TypeBox = props => {
   }, [arrayOfTexts])
 
   useEffect(() => {
-    setTextWithProps(text?.split('').map(el => ({ text: el, current: false, className: 'orig' })))
+    setTextWithProps(text?.split('').map((el, index) => ({ text: el, current: index ? false : true, className: 'orig' })))
   }, [text])
 
   const keyPressHandler = ({ key }) => {
@@ -146,7 +146,8 @@ const TypeBox = props => {
     <div className='type-box'>
       <div className='type-container'>
         <div className='type-input p-5 flex-wrap'>
-            {textWithProps?.map((el, index) => (
+          {isLoading && <span className="primary">{text}</span>}
+            {!isLoading && textWithProps?.map((el, index) => (
                 <StyledSpan current={el.current} className={el.className} key={index}>{el.text}</StyledSpan>
             ))}
         </div>
