@@ -62,6 +62,8 @@ const TypeBox = props => {
     console.log('here as well', data)
     if (!isLoading && !error && data) {
       setArrayOfTexts(data);
+    } else if (isLoading) {
+      setText('Loading awesome text. Please wait.')
     } else if (error) {
       console.log('error', error)
     }
@@ -78,17 +80,21 @@ const TypeBox = props => {
   }, [text])
 
   const keyPressHandler = ({ key }) => {
-    if (!done && typedTexts.length < textWithProps.length) {
-      setTypedTexts([...typedTexts, key])
-    } else {
-      setDone(true)
+    if (!isLoading && !error) {
+      if (!done && typedTexts.length < textWithProps.length) {
+        setTypedTexts([...typedTexts, key])
+      } else {
+        setDone(true)
+      }
     }
   };
 
   const keyDownHandler = ({ key }) => {
-    if (!done && key === 'Backspace') {
-        typedTexts.pop()
-        setTypedTexts([...typedTexts])
+    if (!isLoading && !error) {
+      if (!done && key === 'Backspace') {
+          typedTexts.pop()
+          setTypedTexts([...typedTexts])
+      }
     }
   };
 
