@@ -97,7 +97,7 @@ const TypeBox = props => {
         </div>
       </div>
       <div className='d-flex justify-content-center'>
-        <Button ref={buttonRef} variant='dark' onClick={onClickHandler}onFocus={onFocusHandler}>
+        <Button ref={buttonRef} variant='dark' onClick={onClickHandler} onFocus={onFocusHandler}>
           <FontAwesomeIcon icon={faRedo} />
         </Button>
       </div>

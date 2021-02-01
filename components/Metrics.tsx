@@ -195,6 +195,12 @@ const Metrics = props => {
     setWpm(0);
   };
 
+  const buttonRef = useRef();
+
+  const onFocusHandler = () => {
+    buttonRef.current.blur();
+  };
+
   const [graphValue, setGraphValue] = useState();
   const onGraphHover = value => {
     setGraphValue(value[1]);
@@ -217,13 +223,25 @@ const Metrics = props => {
             <span className="value">{completion.toFixed(2)}</span>
           </div>
         </div>
-        <div className="w-100">
+        <div className="graph-container">
           <div className="text-center text-muted">{graphValue}</div>
-          <LineGraph data={lineGraphData} hover onHover={onGraphHover} accent='#e2b714'/>
+          <LineGraph
+            data={lineGraphData}
+            hover
+            onHover={onGraphHover}
+            accent="#e2b714"
+            gridY
+            gridX
+          />
         </div>
       </div>
-      <div className="d-flex justify-content-center">
-        <Button variant="dark" onClick={onClickHandler}>
+      <div className="d-flex justify-content-center p-5">
+        <Button
+          ref={buttonRef}
+          variant="dark"
+          onClick={onClickHandler}
+          onFocus={onFocusHandler}
+        >
           <FontAwesomeIcon icon={faRedo} />
         </Button>
       </div>
