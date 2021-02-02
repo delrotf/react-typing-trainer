@@ -63,35 +63,29 @@ const Timer = ({ expiryTimestamp }) => {
     <div className="timer">
       <div>
         <div className="d-inline-flex">
-          <span className="digit">{minutes}</span>
+          <span className={`digit ${!isRunning ? "disabled" : ""}`}>
+            {minutes}
+          </span>
           <span className="colon">
             <span />
             <span />
           </span>
-          {!isRunning && startSec.toString().split("").length === 1 && (
-            <span className="digit">0</span>
+
+          {seconds.toString().split("").length === 1 && (
+            <span className={`digit ${!isRunning ? "disabled" : ""}`}>0</span>
           )}
-          {isRunning && seconds.toString().split("").length === 1 && (
-            <span className="digit">0</span>
-          )}
-          {!isRunning &&
-            startSec
-              .toString()
-              .split("")
-              .map((el, index) => (
-                <span key={index} className="digit">
-                  {el}
-                </span>
-              ))}
-          {isRunning &&
-            seconds
-              .toString()
-              .split("")
-              .map((el, index) => (
-                <span key={index} className="digit">
-                  {el}
-                </span>
-              ))}
+
+          {seconds
+            .toString()
+            .split("")
+            .map((el, index) => (
+              <span
+                key={index}
+                className={`digit ${!isRunning ? "disabled" : ""}`}
+              >
+                {el}
+              </span>
+            ))}
         </div>
         <div className="d-flex justify-content-center text-muted">
           <span>{isRunning ? "Running" : "Not running"}</span>
