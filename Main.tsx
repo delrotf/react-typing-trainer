@@ -11,7 +11,6 @@ const Main = props => {
     <div>
       <LoginContextProvider>
         <Route path="/" exact component={LoginPage} />
-        <Route path="/home" exact component={HomePage} />
         <TypingContextProvider>
           <Route path="/typing-trainer" exact component={TypingTrainer} />
         </TypingContextProvider>
