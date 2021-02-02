@@ -62,7 +62,7 @@ const TypeBox = props => {
     } else if (isLoading) {
       setText('Loading awesome text. Please wait.')
     } else if (error) {
-      console.error('error', error)
+      setText("Consectetur irure pancetta ut pork, landjaeger meatloaf do aliquip porchetta.  Sirloin tongue minim, est voluptate exercitation deserunt hamburger sausage chuck bacon.  Ball tip sunt occaecat, ut swine pork chop meatball irure dolore kielbasa.  Sed kielbasa andouille irure ground round in brisket duis.  Short loin in eiusmod aliqua andouille do buffalo jerky anim.  Eiusmod fugiat shankle jerky ball tip, velit ut pancetta beef ribs kielbasa buffalo picanha hamburger.  Biltong chislic labore officia.")
     }
   }, [data, isLoading, error]);
 
@@ -77,7 +77,7 @@ const TypeBox = props => {
   }, [text])
 
   const keyPressHandler = ({ key }) => {
-    if (!isLoading && !error) {
+    if (!isLoading) {
       if (!done && typedTexts.length < textWithProps.length-1) {
         setTypedTexts([...typedTexts, key])
       } else {
@@ -87,7 +87,7 @@ const TypeBox = props => {
   };
 
   const keyDownHandler = ({ key }) => {
-    if (!isLoading && !error) {
+    if (!isLoading) {
       if (!done && key === 'Backspace') {
           typedTexts.pop()
           setTypedTexts([...typedTexts])
@@ -144,11 +144,12 @@ const TypeBox = props => {
 
   return (
     <div className='type-box'>
+      {error && <div className="small mt-3 text-center text-muted p-2">Could not load text from api; using the default text.</div>}
       <div className='type-container'>
         <div className='type-input p-5 flex-wrap'>
-          {isLoading && <span className="primary">{text}</span>}
+            {isLoading && <span className="primary">{text}</span>}
             {!isLoading && textWithProps?.map((el, index) => (
-                <StyledSpan current={el.current} className={el.className} key={index}>{el.text}</StyledSpan>
+              <StyledSpan current={el.current} className={el.className} key={index}>{el.text}</StyledSpan>
             ))}
         </div>
       </div>
