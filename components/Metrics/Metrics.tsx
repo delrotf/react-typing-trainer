@@ -5,34 +5,34 @@ import React, {
   useMemo,
   useReducer,
   useRef,
-  useState
-} from "react";
-import { LoginContext } from "../../context";
-import { TypingContext } from "../../context/typing-context";
-import useHttp from "../../hooks/useHttp";
-import ErrorModal from "../../ui/ErrorModal";
-import moment from "moment";
-import { Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRedo } from "@fortawesome/free-solid-svg-icons";
-import LineGraph from "react-line-graph";
-import RecordList from "../RecordList/RecordList";
-import "./Metrics.scss";
+  useState,
+} from 'react';
+import { LoginContext } from '../../context';
+import { TypingContext } from '../../context/typing-context';
+import useHttp from '../../hooks/useHttp';
+import ErrorModal from '../../ui/ErrorModal';
+import moment from 'moment';
+import { Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRedo } from '@fortawesome/free-solid-svg-icons';
+import LineGraph from 'react-line-graph';
+import RecordList from '../RecordList/RecordList';
+import './Metrics.scss';
 
 const recordReducer = (currentRecords, action) => {
   switch (action.type) {
-    case "SET":
+    case 'SET':
       return action.records;
-    case "ADD":
+    case 'ADD':
       return [...currentRecords, action.record];
-    case "DELETE":
-      return currentRecords.filter(el => el.id !== action.id);
+    case 'DELETE':
+      return currentRecords.filter((el) => el.id !== action.id);
     default:
-      throw new Error("Should not get there!");
+      throw new Error('Should not get there!');
   }
 };
 
-const Metrics = props => {
+const Metrics = (props) => {
   const {
     text,
     setText,
@@ -42,7 +42,7 @@ const Metrics = props => {
     done,
     setDone,
     setTypedTexts,
-    setReset
+    setReset,
   } = useContext(TypingContext);
   const { username } = useContext(LoginContext);
   const typedTextsLength = typedTexts.length;
@@ -85,33 +85,26 @@ const Metrics = props => {
     setCompletion(completion);
   }, [secondsLapsed, typedTextsLength]);
 
-  const baseUrl = "https://react-typing-trainer-default-rtdb.firebaseio.com";
+  const baseUrl = 'https://react-typing-trainer-default-rtdb.firebaseio.com';
 
   const [userRecords, dispatch] = useReducer(recordReducer, []);
-  const {
-    isLoading,
-    error,
-    data,
-    sendRequest,
-    reqExtra,
-    reqIdentifer,
-    clear
-  } = useHttp();
+  const { isLoading, error, data, sendRequest, reqExtra, reqIdentifer, clear } =
+    useHttp();
 
   // load data
   useEffect(() => {
     const query = `?orderBy="username"&equalTo="${username}"`;
     sendRequest(
       `${baseUrl}/records.json${query}`,
-      "GET",
+      'GET',
       null,
       null,
-      "LOAD_RECORDS"
+      'LOAD_RECORDS'
     );
   }, []);
 
   useEffect(() => {
-    if (!isLoading && !error && data && reqIdentifer === "LOAD_RECORDS") {
+    if (!isLoading && !error && data && reqIdentifer === 'LOAD_RECORDS') {
       const loadedRecords = [];
       for (const key in data) {
         loadedRecords.push({
@@ -120,34 +113,34 @@ const Metrics = props => {
           accuracy: data[key].accuracy,
           completion: data[key].completion,
           wpm: data[key].wpm,
-          date: data[key].date
+          date: data[key].date,
         });
       }
-      dispatch({ type: "SET", records: loadedRecords });
+      dispatch({ type: 'SET', records: loadedRecords });
     }
   }, [data, isLoading, error]);
 
   useEffect(() => {
-    if (!isLoading && !error && reqIdentifer === "REMOVE_RECORD") {
-      dispatch({ type: "DELETE", id: reqExtra });
-    } else if (!isLoading && !error && reqIdentifer === "ADD_RECORD") {
+    if (!isLoading && !error && reqIdentifer === 'REMOVE_RECORD') {
+      dispatch({ type: 'DELETE', id: reqExtra });
+    } else if (!isLoading && !error && reqIdentifer === 'ADD_RECORD') {
       const record = { id: data.name, ...reqExtra };
 
       dispatch({
-        type: "ADD",
-        record
+        type: 'ADD',
+        record,
       });
     }
   }, [data, reqExtra, reqIdentifer, isLoading, error]);
 
   const addRecordHandler = useCallback(
-    record => {
+    (record) => {
       sendRequest(
         `${baseUrl}/records.json`,
-        "POST",
+        'POST',
         JSON.stringify(record),
         record,
-        "ADD_RECORD"
+        'ADD_RECORD'
       );
     },
     [sendRequest]
@@ -160,26 +153,26 @@ const Metrics = props => {
         accuracy,
         completion,
         wpm,
-        date: moment().format("MMMM Do YYYY, h:mm:ss a")
+        date: moment().format('MMMM Do YYYY, h:mm:ss a'),
       };
       addRecordHandler(record);
     }
   }, [wpm]);
 
   const removeRecordHandler = useCallback(
-    recordId => {
+    (recordId) => {
       sendRequest(
         `${baseUrl}/records/${recordId}.json`,
-        "DELETE",
+        'DELETE',
         null,
         recordId,
-        "REMOVE_RECORD"
+        'REMOVE_RECORD'
       );
     },
     [sendRequest]
   );
 
-  const lineGraphData = userRecords.map(el => {
+  const lineGraphData = userRecords.map((el) => {
     return el.wpm;
   });
 
@@ -194,7 +187,7 @@ const Metrics = props => {
     setDone(false);
     setSecondsLapsed(0);
     setWpm(0);
-    setReset(prev => ++prev);
+    setReset((prev) => ++prev);
   };
 
   const buttonRef = useRef();
@@ -204,7 +197,7 @@ const Metrics = props => {
   };
 
   const [graphValue, setGraphValue] = useState(null);
-  const onGraphHover = value => {
+  const onGraphHover = (value) => {
     setGraphValue(value[1]);
   };
 
@@ -214,7 +207,7 @@ const Metrics = props => {
         <div className="text-center primary">
           {graphValue !== null
             ? graphValue.toFixed(0)
-            : "Hover on graph to see the value here."}
+            : 'Hover on graph to see the value here.'}
         </div>
         <LineGraph
           data={lineGraphData}
