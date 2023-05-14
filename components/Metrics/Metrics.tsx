@@ -193,7 +193,9 @@ const Metrics = (props) => {
   const buttonRef = useRef();
 
   const onFocusHandler = () => {
-    buttonRef.current.blur();
+    let theButton = buttonRef.current;
+
+    theButton!.blur();
   };
 
   const [graphValue, setGraphValue] = useState(null);
