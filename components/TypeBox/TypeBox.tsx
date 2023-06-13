@@ -58,6 +58,7 @@ const TypeBox = props => {
   // load data
   useEffect(() => {
     if (!isLoading && !error && data) {
+      console.log("data:", data);
       setArrayOfTexts(data);
     } else if (isLoading) {
       setText('Loading awesome text. Please wait.')
@@ -130,7 +131,7 @@ const TypeBox = props => {
   useEventListener("keypress", keyPressHandler);
   useEventListener("keydown", keyDownHandler);
 
-  const buttonRef = useRef()
+  const buttonRef = useRef<HTMLButtonElement>()
 
   const onClickHandler = () => {
     setTypedTexts([])
@@ -139,7 +140,7 @@ const TypeBox = props => {
   }
 
   const onFocusHandler = () => {
-    buttonRef.current.blur()
+    buttonRef.current!.blur()
   }
 
   return (
